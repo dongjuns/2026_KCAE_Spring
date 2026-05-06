@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대한기계학회 CAE 및 응용역학부문 2026 춘계학술대회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a1929;
+    --ink-2: #1a2942;
+    --paper: #f4f1ea;
+    --paper-2: #ebe6db;
+    --accent: #c2410c;
+    --accent-2: #f97316;
+    --gold: #b8860b;
+    --line: rgba(10, 25, 41, 0.1);
+    --line-strong: rgba(10, 25, 41, 0.3);
+    --shadow: 0 1px 0 rgba(10,25,41,0.06), 0 8px 24px -12px rgba(10,25,41,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(194,65,12,0.04), transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(10,25,41,0.04), transparent 40%);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1700px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 28px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 32px;
+  }
+
+  .masthead-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 900;
+    font-size: clamp(26px, 3.5vw, 42px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  h1 .accent { color: var(--accent); }
+
+  .subtitle {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14px;
+    color: var(--ink-2);
+    margin-top: 8px;
+  }
+
+  .meta {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+  .meta strong { color: var(--ink); font-weight: 500; }
+
+  /* DAY TABS */
+  .day-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .day-tab {
+    background: none;
+    border: none;
+    padding: 14px 24px;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink-2);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s;
+  }
+  .day-tab:hover { color: var(--accent); }
+  .day-tab.active {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+  }
+  .day-tab .date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    display: block;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  /* CONTROLS */
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+  .controls-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-right: 4px;
+  }
+  .filter-btn {
+    background: white;
+    border: 1px solid var(--line-strong);
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--ink-2);
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .filter-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .filter-btn .dot {
+    width: 8px; height: 8px;
+    border: 1px solid var(--line-strong);
+  }
+  .compare-info {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-2);
+  }
+  .compare-info strong { color: var(--accent); }
+
+  /* SCHEDULE GRID */
+  .schedule-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--ink);
+    background: white;
+    box-shadow: var(--shadow);
+  }
+
+  .schedule {
+    display: grid;
+    min-width: 1500px;
+    grid-template-columns: 80px repeat(7, 1fr);
+  }
+
+  .grid-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 8px;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    line-height: 1.3;
+  }
+  .grid-header:last-child { border-right: none; }
+  .grid-header .room-no {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--accent-2);
+    margin-bottom: 2px;
+    font-weight: 500;
+  }
+  .grid-header .room-loc {
+    display: block;
+    font-size: 10px;
+    opacity: 0.65;
+    font-weight: 400;
+    margin-top: 2px;
+  }
+  .grid-header.time-head {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  /* Block separator (session start) */
+  .block-marker {
+    grid-column: 1 / -1;
+    background: var(--paper-2);
+    padding: 6px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--ink-2);
+    text-transform: uppercase;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .block-marker .block-time {
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .block-marker .block-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .time-cell {
+    padding: 8px 6px;
+    background: var(--paper-2);
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .time-cell .time-end {
+    opacity: 0.55;
+    font-size: 10px;
+  }
+
+  .talk {
+    padding: 9px 10px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    font-size: 11px;
+    line-height: 1.4;
+    background: white;
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: opacity 0.2s;
+  }
+
+  .talk.dimmed {
+    opacity: 0.2;
+  }
+
+  .talk-title-mini {
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .talk-author-mini {
+    font-size: 10px;
+    color: var(--ink-2);
+    margin-top: 5px;
+    font-style: italic;
+    line-height: 1.3;
+  }
+
+  .talk-invited-marker {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  .talk-cat-bar {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+  .cat-keynote .talk-cat-bar { background: #4a6fa5; }
+  .cat-special .talk-cat-bar { background: var(--accent-2); }
+  .cat-contest .talk-cat-bar { background: #b8860b; }
+  .cat-poster .talk-cat-bar { background: #8b6f47; }
+  .cat-tutorial .talk-cat-bar { background: #c97171; }
+  .cat-normal .talk-cat-bar { background: #94a3b8; }
+
+  .talk.empty {
+    background: repeating-linear-gradient(45deg, var(--paper-2), var(--paper-2) 5px, transparent 5px, transparent 10px);
+    opacity: 0.35;
+  }
+
+  .talk.break-cell {
+    background: var(--paper-2);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-2);
+    font-style: italic;
+    font-size: 11px;
+  }
+  .talk.break-cell .break-label {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    color: var(--ink-2);
+    opacity: 0.7;
+  }
+
+  /* Merged cell (poster, contest, tutorial) — show all talks inline */
+  .talk.merged {
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 12px 12px 10px;
+    overflow: hidden;
+  }
+  .merged-desc {
+    font-size: 10.5px;
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .merged-talks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+  }
+  .merged-talks li {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 4px;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+  .merged-talks .mt-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    font-weight: 500;
+    padding-top: 1px;
+  }
+  .merged-talks .mt-content { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .merged-talks .mt-title {
+    color: var(--ink);
+    font-weight: 500;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+  .merged-talks .mt-author {
+    color: var(--ink-2);
+    font-style: italic;
+    font-size: 9.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Wide (full row) events */
+  .full-row {
+    grid-column: 2 / -1;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .full-row.lunch { background: #1a2942; text-align: center; }
+  .full-row.break { background: var(--paper-2); color: var(--ink-2); font-style: italic; text-align: center; }
+  .full-row .row-title { font-family: 'Noto Serif KR', serif; font-weight: 600; font-size: 14px; }
+  .full-row .row-desc {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: rgba(244,241,234,0.8);
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-weight: 400;
+  }
+  .full-row .row-desc p { margin-bottom: 4px; }
+  .full-row .row-desc strong { color: var(--accent-2); font-weight: 500; font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-right: 4px; }
+
+  /* Session header row showing the session name across multiple rooms */
+  .session-headers {
+    display: contents;
+  }
+  .session-head-cell {
+    padding: 6px 8px;
+    background: var(--paper-2);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line-strong);
+    font-size: 10.5px;
+    line-height: 1.3;
+    font-weight: 600;
+    color: var(--ink);
+    position: relative;
+  }
+  .session-head-cell .sh-cat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .session-head-cell .sh-chair {
+    font-size: 9.5px;
+    color: var(--ink-2);
+    font-weight: 400;
+    font-style: italic;
+    margin-top: 3px;
+  }
+  .session-head-cell.empty {
+    background: var(--paper-2);
+    opacity: 0.4;
+  }
+  .session-head-cell .cat-stripe {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+  .session-head-cell.cat-keynote .cat-stripe { background: #4a6fa5; }
+  .session-head-cell.cat-special .cat-stripe { background: var(--accent-2); }
+  .session-head-cell.cat-contest .cat-stripe { background: #b8860b; }
+  .session-head-cell.cat-poster .cat-stripe { background: #8b6f47; }
+  .session-head-cell.cat-tutorial .cat-stripe { background: #c97171; }
+  .session-head-cell.cat-normal .cat-stripe { background: #94a3b8; }
+
+  .session-head-time {
+    padding: 6px 8px;
+    background: var(--ink);
+    color: var(--paper);
+    border-right: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid var(--line-strong);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Footer */
+  .footer-note {
+    margin-top: 28px;
+    padding: 16px 20px;
+    background: var(--paper-2);
+    border-left: 3px solid var(--ink);
+    font-size: 12px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+  .footer-note strong { color: var(--ink); }
+
+  .hint {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-2);
+    margin-top: 14px;
+    letter-spacing: 0.1em;
+  }
+  .hint::before, .hint::after {
+    content: "—";
+    margin: 0 12px;
+    color: var(--accent);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .container { padding: 24px 12px 60px; }
+    header { grid-template-columns: 1fr; }
+    .meta { text-align: left; }
+    .controls { flex-direction: column; align-items: stretch; }
+    .compare-info { margin-left: 0; }
+    .modal-header { padding: 20px; }
+    .modal-body { padding: 20px; }
+    .modal-title { font-size: 17px; }
+  }
+
+  /* MODAL */
+  .talk:not(.empty):not(.break-cell) { cursor: pointer; transition: background 0.15s, box-shadow 0.15s; }
+  .talk:not(.empty):not(.break-cell):hover {
+    background: #fffbf5;
+    box-shadow: inset 0 0 0 2px var(--accent);
+    z-index: 2;
+  }
+  .talk.merged { cursor: pointer; }
+
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 25, 41, 0.55);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 24px;
+    animation: fadeIn 0.18s ease;
+  }
+  .modal-backdrop.show { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .modal {
+    background: var(--paper);
+    max-width: 820px;
+    width: 100%;
+    max-height: 86vh;
+    overflow-y: auto;
+    border: 1px solid var(--ink);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: slideUp 0.22s ease;
+  }
+
+  .modal-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 24px 28px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .modal-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--accent-2);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .modal-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .modal-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: rgba(244,241,234,0.7);
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+  .modal-meta strong { color: var(--paper); font-weight: 500; }
+  .modal-close {
+    background: none;
+    border: 1px solid rgba(244,241,234,0.3);
+    color: var(--paper);
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-size: 18px;
+    flex-shrink: 0;
+    line-height: 1;
+    transition: all 0.15s;
+  }
+  .modal-close:hover { background: var(--accent); border-color: var(--accent); }
+
+  .modal-body { padding: 24px 28px 28px; }
+
+  .talk-full-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .talk-invited-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    background: var(--accent);
+    color: var(--paper);
+    padding: 2px 7px;
+    margin-right: 8px;
+    vertical-align: 4px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .talk-full-authors {
+    font-size: 13.5px;
+    color: var(--ink);
+    line-height: 1.7;
+    padding: 14px 16px;
+    background: white;
+    border-left: 3px solid var(--accent);
+  }
+  .talk-full-authors .presenter {
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .talk-full-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    margin-top: 12px;
+    display: block;
+  }
+
+  /* Poster modal — categorized list */
+  .poster-cat-group {
+    margin-bottom: 22px;
+  }
+  .poster-cat-header {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .poster-cat-header .cat-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+  .poster-list {
+    list-style: none;
+  }
+  .poster-list li {
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 10px;
+    font-size: 12px;
+  }
+  .poster-list li:last-child { border-bottom: none; }
+  .poster-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    padding-top: 1px;
+    font-weight: 500;
+  }
+  .poster-content { line-height: 1.45; min-width: 0; }
+  .poster-title {
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+  .poster-author {
+    color: var(--ink-2);
+    font-size: 11px;
+    margin-top: 3px;
+    font-style: italic;
+  }
+  .poster-summary {
+    background: var(--paper-2);
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    border-left: 3px solid var(--accent);
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+
+  /* Inline list for sessions in modal */
+  .session-talk-list {
+    list-style: none;
+    margin-top: 8px;
+  }
+  .session-talk-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 12px;
+    font-size: 12px;
+  }
+  .session-talk-list li:last-child { border-bottom: none; }
+  .stl-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .stl-content { line-height: 1.45; min-width: 0; }
+  .stl-title { color: var(--ink); font-weight: 500; font-size: 12px; }
+  .stl-author { color: var(--ink-2); font-size: 11px; margin-top: 2px; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div>
+      <div class="masthead-label">KSME · CAE & Applied Mechanics Division</div>
+      <h1>대한기계학회 <span class="accent">CAE 및 응용역학부문</span><br>2026년 춘계학술대회</h1>
+      <p class="subtitle">발표 단위 인터랙티브 일정표 · 셀을 클릭하면 발표 상세 및 동시 진행 세션을 비교할 수 있습니다</p>
+    </div>
+    <div class="meta">
+      <strong>일시</strong> 2026.05.06 (수) ~ 05.09 (토)<br>
+      <strong>장소</strong> 여수 소노캄 호텔<br>
+      <strong>총 발표</strong> 353편
+    </div>
+  </header>
+
+  <nav class="day-tabs">
+    <button class="day-tab active" data-day="thu"><span class="date">05 / 07 THU</span>5월 7일 목요일</button>
+    <button class="day-tab" data-day="fri"><span class="date">05 / 08 FRI</span>5월 8일 금요일</button>
+  </nav>
+
+  <div class="controls">
+    <span class="controls-label">CATEGORY FILTER</span>
+    <button class="filter-btn active" data-filter="all">전체</button>
+    <button class="filter-btn" data-filter="keynote"><span class="dot" style="background:#4a6fa5"></span>초청강연</button>
+    <button class="filter-btn" data-filter="special"><span class="dot" style="background:var(--accent-2)"></span>특별세션</button>
+    <button class="filter-btn" data-filter="contest"><span class="dot" style="background:#b8860b"></span>학생경진대회</button>
+    <button class="filter-btn" data-filter="tutorial"><span class="dot" style="background:#c97171"></span>튜토리얼</button>
+    <button class="filter-btn" data-filter="poster"><span class="dot" style="background:#8b6f47"></span>포스터</button>
+    <button class="filter-btn" data-filter="normal"><span class="dot" style="background:#94a3b8"></span>일반세션</button>
+    <span class="compare-info"><strong>●</strong> Invited 발표</span>
+  </div>
+
+  <div class="schedule-wrap">
+    <div class="schedule" id="schedule"></div>
+  </div>
+
+  <p class="hint">발표 셀을 클릭하면 전체 저자 정보, 포스터 셀을 클릭하면 포스터 목록을 볼 수 있습니다</p>
+
+  <div class="footer-note">
+    <strong>참고</strong> · 본 페이지는 프로그램북을 기반으로 재구성한 비공식 시각화 도구입니다. 실제 일정 및 변경사항은 학회 공식 안내를 확인해 주세요. · 발표장: 컨벤션 1층(그랜드볼룸 1·2), 컨벤션 2층(사파이어 1~3), 웰니스센터 5층(릴리 1·2)
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modal">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <div style="min-width:0; flex:1">
+        <span class="modal-tag" id="modalTag"></span>
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <div class="modal-meta" id="modalMeta"></div>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="닫기">×</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+const ROOMS = [
+  { name: '제1발표장', loc: '그랜드볼룸1' },
+  { name: '제2발표장', loc: '그랜드볼룸2' },
+  { name: '제3발표장', loc: '사파이어1' },
+  { name: '제4발표장', loc: '사파이어2' },
+  { name: '제5발표장', loc: '사파이어3' },
+  { name: '제6발표장', loc: '릴리1' },
+  { name: '제7발표장', loc: '릴리2' }
+];
+
+// Helper: produce a clean cell-display author string
+// Shows the first author with affiliation, and "외 N명" if there are more
+function cellAuthor(fullAuthors) {
+  if (!fullAuthors) return '';
+  // Split by comma, but be careful with commas inside parentheses
+  const parts = [];
+  let depth = 0, cur = '';
+  for (const ch of fullAuthors) {
+    if (ch === '(') depth++;
+    else if (ch === ')') depth--;
+    if (ch === ',' && depth === 0) {
+      parts.push(cur.trim()); cur = '';
+    } else cur += ch;
+  }
+  if (cur.trim()) parts.push(cur.trim());
+  if (parts.length === 0) return fullAuthors;
+  if (parts.length === 1) return parts[0];
+  return `${parts[0]} 외 ${parts.length - 1}명`;
+}
+
+// Talk constructor
+const T = (code, title, authors, opts={}) => ({
+  code, title, authors,
+  fullAuthors: opts.fullAuthors || authors,
+  invited: opts.invited || false
+});
+
+// Poster constructor
+const P = (id, title, authors) => ({ id, title, authors });
+
+// Poster session data — pulled from PDF pages 19-28
+const POSTERS = {
+  A: {
+    summary: '2026년 5월 7일 (목) 09:00–10:15 · 제7발표장(릴리2) · 53편',
+    groups: [
+      { name: '구조설계 및 CAE', items: [
+        P('A01','미래차 럼버서포트용 SMA밸브 하우징 랜덤바이브레이션 해석에 관한 연구','김형준*((재)경북테크노파크), 최재영, 최창환'),
+        P('A02','CFD 기반 설계변수에 따른 대기환경 측정장치 내부 유동 특성 분석','이경동*((재)경북테크노파크), 김영웅(웬스), 손선호(웬스)'),
+        P('A03','쿼터부 브라켓 처짐 분석을 통한 설계활동','최현범*((주)호원), 이상헌, 이서한, 김미혜(솔루션라인 코리아)'),
+        P('A04','용접지그 조건에 따른 범퍼빔 변형 거동','최현범*((주)호원), 이상헌, 이서한, 남경욱(조선대), 박정웅(조선대)'),
+        P('A05','Development of a Quantitative Evaluation Framework for CNT–Polymer Adsorption and Wrapping via MLFF Molecular Dynamics Simulation','김남훈*(전남대)'),
+        P('A06','격자형 로봇 그리퍼 생성적 설계를 위한 그래프 신경망 기반 격자 구조 기계적 특성 예측 모델 구축','방진홍*(경상국립대), 최민혁, 도재혁'),
+        P('A07','XFOIL 기반 직접 설계 최적화 자동화 API 개발: 2차원 에어포일 형상 최적화에 적용','최준혁*(경상국립대), 김용준, 도재혁'),
+        P('A08','의료용 나노섬유 제조를 위한 고성능 제트 방사 장치 개발','최은애*(전북대), 이정호, 한하빈, 안동현, 오진, 박찬희'),
+        P('A09','Fatigue Behavior of CNT-PDMS-Based Stretchable Conductive Devices under Cyclic Mechanical Loading','하산 세이드 탐지드*(공주대), 윤정훈'),
+        P('A10','Junction Temperature Prediction under Power Cycling Test','김영근*(GIST), 이주은, 최민석, 오현석'),
+        P('A11','자기 액추에이터 설계를 위한 영전자석 복합재의 다중스케일 위상최적화','이민성*(GIST), 이도훈(Technical University of Denmark), 이재욱'),
+        P('A12','명시적 역균질화를 이용한 다중스케일 위상최적화 기반 경사 핀-핀 히트 싱크 설계','지용화*(GIST), 이재욱'),
+        P('A13','피클볼 패들 코어의 성능 향상을 위한 위상최적화 기반 설계','한정삼*(국립경국대), 용승준'),
+        P('A14','진공 부스터 펌프의 진동 및 회전체 해석','한정삼*(국립경국대), 용승준, 박병주'),
+        P('A15','이태원 압사 사고 영상 기반 PIV 분석을 통한 군중 유동 특성 연구','김경은*(국립금오공과대), 박준영'),
+        P('A16','Digimat-VA를 활용한 복합소재 적층 구조물의 확률론적 거동 해석 및 불확실성 평가','최정욱*(국립금오공과대), 이긍현, 김정민, 한장우'),
+        P('A17','복합소재 3D Printing 출력물에 대한 AM-열-구조 연계 해석','설영훈*(국립금오공과대), 김정민, 심민호, 윤민호(서울시립대), 한장우'),
+        P('A18','단섬유 강화 복합소재 사출 성형품의 부위별 이방 물성이 고려된 2D Plate 요소 기반 사출 성형-구조 연계 해석','김정민*(국립금오공과대), 설영훈, 최정욱, 성민준, 곽윤기, 한장우'),
+        P('A19','자기력장을 활용한 탈철기 선택적 입자 포집의 DEM 시뮬레이션','이준규*(금오공과대 기계시스템공학과), 박준영'),
+        P('A20','메시 유형 및 경계층 설정이 사출성형 해석 결과에 미치는 영향','노승규*(케이앤솔루션)'),
+        P('A21','접촉 페널티 강성 파라미터가 Hertz 접촉 문제의 유한요소해석 결과에 미치는 영향','임태양*(케이앤솔루션)'),
+        P('A22','수치해석을 활용한 글로브 밸브의 개도량 및 유입 압력에 따른 내부 유동 특성 및 공동현상 발생 한계에 관한 연구','배영완*(케이앤솔루션)')
+      ]},
+      { name: '인공지능/머신러닝', items: [
+        P('A23','매개변수 PINN 기반 열전달 해석 및 열원 설계 최적화','이하늘*(강원대), 박한조(케이에스엠컴포넌트), 윤경수'),
+        P('A24','구조해석을 위한 전이학습 기반 물리정보신경망','김찬호*(GIST), 이재욱'),
+        P('A25','연산자 학습을 활용한 전기 모터의 실시간 동적 모델링','명정욱*(GIST), 이승현, 이재욱'),
+        P('A26','위상최적화 기반 데이터셋을 활용한 조건부 생성형 설계와 구조 성능 검증','한동국*(GIST), 이재욱'),
+        P('A27','Ultrafast Electromagnetic Topology Optimization Based on Equivalent Magnetic Circuit','홍석우*(GIST), 이재욱'),
+        P('A28','Multi-Head Attention Transformer-Based Damage Zone Localization in Laminated Composites','무하마드 하리스 야즈다니*(동국대), 김흥수'),
+        P('A29','주파수 분석 기반 합성곱 오토인코더를 이용한 산업용 로봇팔의 비지도 이상 탐지','전성현*(동국대), 무함마드 우마르 엘라히, 천유빈, 김흥수'),
+        P('A30','Interpreting Human Age Estimation from Full-Body Infrared Thermography with Explainable AI','Sohail Muhammad*(동국대), 힉맷야, 김흥수'),
+        P('A31','이종 온톨로지 기반 다중 에이전트 시스템을 활용한 사족보행 로봇의 재난 환경 내 안전 탐색 프레임워크','이정환*(서울대), 김태훈, 유진오, 양준호, 박찬희(서울시립대), 윤병동'),
+        P('A32','다중 공학 과제 수행을 위한 구조-물성 예측 기반 메타물질 혼합 전문가 모델','최한솜*(서강대), 조형준(서울대), 이동석, 홍영준, 김남중'),
+        P('A33','자기 에너지 하베스팅 코어의 심층학습 기반 형상 최적화를 통한 경량화 설계','변승균*(서강대), 김민중(한밭대), 송지환'),
+        P('A34','영구자석 동기전동기의 위상최적화 대리모델 구축','이승현*(GIST), 이재준, 이재욱'),
+        P('A36','다변량 조건을 고려한 실험 설계 및 반도체 CMP 공정 결과 예측 모델링 프레임워크','이상경*(서울대), 김주현, 손혜정(삼성전자), 윤병동'),
+        P('A37','대체 모델 기반 다중 에이전트 강화학습을 활용한 고차원 설계 최적화','장현호*(한양대), 이동진'),
+        P('A38','영역 절단 기법을 적용한 char 연소 시스템의 OpInf 기반 저차원 모델링','우현중*(한양대), 이동진')
+      ]},
+      { name: '전산역학', items: [
+        P('A39','Multi-stage moment fitting combined with linear programming for stable and efficient numerical integration in Finite Cell Method','김우식*(UNIST), 정하영')
+      ]},
+      { name: '멀티스케일 해석과 설계', items: [
+        P('A40','신축성 압전 회로의 구조적 형상 변화에 따른 전압 효율 분석','김경찬*(공주대), 윤정훈'),
+        P('A41','은 나노와이어 네트워크 방향성에 따른 기계적 특성 및 전류밀도 변화','김미경*(공주대), 윤정훈'),
+        P('A42','Chemo-Mechanical Analysis of Stress Localization in Single Crystalline NMC811 Cathode Particles under SOC-Dependent Anisotropic Lithium Diffusion','하산하셉울*(동국대 기계로봇에너지공학과)')
+      ]},
+      { name: '멀티피직스 시스템 해석과 설계', items: [
+        P('A43','반도체 공정 챔버 환경에서 서셉터의 열전달 해석','김병지*(강원대), 박한조(케이에스엠컴포넌트), 윤경수'),
+        P('A44','음장 측정 시스템 기반 초음파 수치해석 모델의 설계 인자 도출 및 검증','강주원*(경북대 대학원 기계공학과)'),
+        P('A45','차량 Pillar에 적용된 LED 조명에 대한 전기적, 열적 특성 분석','김동민*(경북테크노파크), 김수한, 차승훈, 이찬희'),
+        P('A46','전기 모터의 구조 진동과 NVH 특성 연구','이성창*(GIST), 이재욱'),
+        P('A47','전달행렬법을 이용한 다층 음향 흡음 구조의 최적 설계 및 실험적 검증','양범준*(부경대), 정현준, 박용호, 현재엽')
+      ]},
+      { name: '통계기반 해석 및 설계', items: [
+        P('A48','에너지 균형 스케일링 및 L1-정규화 희소 복원 기반 기울기 강화 스플라인 차원 분해','허은호*(한양대), 이동진'),
+        P('A49','PDD-NARX 대체모델 기반 쿼드로터의 확률론적 모델예측제어','임규빈*(한양대 대학원), 이동진'),
+        P('A50','다중충실도 기반 DD-GPCE 대체모델의 꼬리 영역 보정을 통한 위험 회피 최적 설계','이결희*(한양대), 이동진')
+      ]},
+      { name: '기타', items: [
+        P('A51','PRA 내 릴레이 상측 버스바 면적과 발열 성능의 상관 관계에 대한 연구','권효준*(현대케피코), 한유현, 박지훈, 김상민'),
+        P('A52','버스바 형상 및 인접 버스바 전류 조건에 따른 홀 센서 측정 특성에 대한 연구','권효준*(현대케피코), 한유현, 박지훈'),
+        P('A53','친환경 소재 적용 흡기매니폴드 개발에 관한 연구','김지선*(현대케피코), 황성순'),
+        P('A54','Cholesterol-Modulated Membrane Fusion and Phase Separation','송승훈*(성균관대), Wataru Shinoda(Okayama University), 서상재(KISTI), 김문기')
+      ]}
+    ]
+  },
+  B: {
+    summary: '2026년 5월 7일 (목) 10:45–12:00 · 제7발표장(릴리2) · 54편',
+    groups: [
+      { name: '구조설계 및 CAE', items: [
+        P('B01','메쉬 기반 전자기장 유한요소해석의 효율 및 정밀도 향상을 위한 U-Net 초해상화 기법','유재경*(동국대)'),
+        P('B02','A Temporarily Partitioned Ensemble Approach for Cross-Cell Lithium-Ion Battery Prognostics and Health Management','탄비어 모하드*(동국대 기계공학과), 김흥수'),
+        P('B03','A Lightweight Deep Learning Framework for Driver Attention Monitoring Using RGB-IR Modality','히크마트 야르*(동국대 기계로봇에너지공학과), 김흥수'),
+        P('B04','헤어핀 권선 IPMSM의 전치 패턴에 따른 특성 비교','서영주*(동국대 기계로봇에너지공학과)'),
+        P('B05','위상장 데미지 모델을 활용한 다중물리 열차폐코팅 유한요소모델 개발','신창섭*(명지대), 이택상'),
+        P('B06','열차폐 코팅 시스템에서 열생성산화막 성장의 다중물리 모델링 개발과 이를 활용한 설계 변수 최적화 방법론 연구','이승욱*(명지대 대학원 기계공학과), 이택상'),
+        P('B07','FEA 시뮬레이션 자동화를 통한 다층 필름의 외층 물성 역추정 및 최적 두께 조합 도출','장준명*(부산대)'),
+        P('B08','Development of a Fatigue Life Prediction Model for Steel Based on Material Property Correlations','최성훈*(서강대), 이현우, 이현수, 최중길(현대자동차), 조봉래(현대자동차), 김동철'),
+        P('B09','Predictive Modeling of Vehicle Body Assembly Tolerance via Physics-Informed Neural Networks Integrated with Finite Element Analysis','강정훈*(서강대), 김동철, 소재승(현대자동차)'),
+        P('B10','와우 메커니즘 기반 음향 블랙홀의 진동 및 소산 특성 분석','윤종연*(서강대), 유가은, 김한수, 김남근'),
+        P('B11','이중 경로 간섭 메커니즘을 이용한 가변형 오리가미 기반 음향 메타물질 설계 (Origami-based tunable acoustic metamaterial via Fano-like interference)','변창섭*(서울과기대), 윤관호'),
+        P('B12','와류 기반 음향 핀셋을 활용한 비접촉 방식의 입자 제어','변창섭*(서울과기대), 한인격, 조성민, 윤관호'),
+        P('B13','제조 불확실성을 고려한 열탄성 문제의 CAD 기반 형상 최적설계','정훈*(서울시립대), 권현준, 엄기원, 김현석(선박해양플랜트연구소), 조현규(목포대), 윤민호'),
+        P('B14','액추에이터의 신뢰성 기반 형상 최적설계','박소영*(서울시립대), 문희재, 김현석(선박해양플랜트연구소), 조현규(목포대), 이재욱(GIST), 윤민호'),
+        P('B15','빔 기반 차체 모델의 조인트 강성 예측을 위한 그래프 신경망 기법','정다은*(세종대), 장강원'),
+        P('B16','머신러닝을 활용한 이중 도핑 LGPS 고체전해질 탐색','정예림*(숭실대 기계공학과), 선지원, 김주오(연세대 대학원), 신우진(연세대), 민경민(연세대)'),
+        P('B17','결빙 방지 PDMS 표면에서의 얼음 접착–슬리피지 전이 거동에 대한 분자동역학 연구','송준호*(연세대), 남건우(숭실대), 박성훈(숭실대), 민경민'),
+        P('B18','3차원 CNN을 이용한 고엔트로피 과리튬 층상 산화물 및 페로브스카이트 탐색 방법','김주오*(연세대 대학원), 민경민'),
+        P('B19','Molecular Dynamics Analysis of Screw Dislocation Mobility in Ni-Cr Solid Solution','봉건균*(연세대 기계공학과 전산재료역학연구실)'),
+        P('B20','진동 하중-구조 응답 연계 해석을 통한 철도 차량용 열화상 카메라 시스템의 구조 진동 평가','임종훈*(웹스시스템코리아), 이병인(샬롬엔지니어링)'),
+        P('B21','저주파 광대역 밴드갭 구현을 위한 격자 구조의 베이지안 최적화 기반 형상 설계','윤효의*(이화여대), 박채원, 이태건(한국표준과학연구원), 최원재(한국표준과학연구원), 이상륜'),
+        P('B22','기계학습 기반 설계 기법을 활용한 격자 구조의 강성 및 열전도도 다목적 최적설계','김현지*(이화여대), 윤효의, 이상륜')
+      ]},
+      { name: '인공지능/머신러닝', items: [
+        P('B23','고분자전해질 연료전지의 성능 평가를 위한 다중 충실도 심층 연산자 신경망','김형인*(숭실대), 박규태, 김연수, 박태현, 윤헌준'),
+        P('B24','물리 지식 기반 인공 지능 모델을 이용한 실험 음향 고유모드 획득','조수근*(아주대), 이진우'),
+        P('B25','물리 정보 신경망을 이용한 위상장 파괴 모델 기반 Direct FE2 멀티스케일 해석','김혜진*(전북대), 조해성(전북대 항공우주공학과)'),
+        P('B26','Real-time Intrabody Potential Mapping for Personalized Bioelectronics via Deep Operator Learning','간형배*(중앙대), 라동현, 이재륜, 이수영'),
+        P('B27','Inverse Design of Materials via Expert Knowledge-embedded Large Language Model','이재륜*(중앙대), 정유진, 이수영'),
+        P('B28','DeepHIC: Human-in-Correction Deep Generative 3D Design Framework','정훈형*(중앙대), 김영태, 이수영'),
+        P('B29','RAG-Based Literature Data Analysis Framework for Sulfide-Based ASSBs','김나연*(중앙대 일반대학원), 김준형, 양서연, 문장혁'),
+        P('B30','결정 구조 생성 모델의 강화학습 기반 파인튜닝을 통한 고이온전도성 고체전해질 소재 탐색','문태준*(중앙대), 장홍준, 문장혁'),
+        P('B31','심해저 환경 광대역 소음 저감을 위한 강화학습 기반 음향 피복 메타구조 최적 설계','오기승*(서울대), 조치영, 오주환'),
+        P('B32','확산모델을 통한 멀티 피직스 진주 복합재의 역설계','변진언*(KAIST), 박동근, 박건도, 유승화'),
+        P('B33','공간 구성 변화를 고려한 참조 레이아웃 수정 기반 배치 설계','김석준*(KAIST), 김지용, 유수호, 강남우'),
+        P('B34','물리정보신경망 기반 복합재 테이프스프링 쌍안정 변형 경로 해석','채혁재*(KAIST), 강석헌, 임재혁(경희대), 유승화'),
+        P('B35','Fourier Neural Operator를 이용한 형태·잡음·해상도 변화에 강건한 초음파 탄성 영상','김희규*(KAIST), 이후곤, 박민우, 유승화'),
+        P('B36','Physics-Informed Diffusion Framework: Enabling Accurate and Efficient Inverse Design of Nonlinear Microstructures','유제천*(KAIST), 변진언, 유승화'),
+        P('B37','Discovery of Yield Functions in Plasticity via Physics-Informed Convex Neural Networks','문현빈*(KAIST), 유제천, 유승화')
+      ]},
+      { name: '전산역학', items: [
+        P('B38','극초음속 이중 원뿔 형상의 단방향 자기장 유동 제어 수치해석','오하람*(성균관대), 김윤제'),
+        P('B39','Two-scale shape and topology optimization with stress and volume constraints using trimmed meshes infilled with micro-structure','김진후*(서울과기대 대학원), 김현규'),
+        P('B40','복합재 적층판 잔류응력의 효율적 추정을 위한 전략적 데이터 선택 기반 DeepONet','이승우*(서울대 기계공학부), 정규순, 김도년'),
+        P('B41','전기적 토크에 의해 유도된 아밀로이드-β K16 변이체의 비가역적 기계적 약화','임송희*(창원대), 신홍철(고려대), 염준빈, 윤태영'),
+        P('B42','아밀로이드 섬유의 기계적 약화를 위한 Transformer–강화학습 기반 decoy peptide 설계','김채현*(국립창원대), 임송희, 윤태영, 신홍철(고려대)'),
+        P('B43','반도체 장비 샤워헤드 노즐 형상 영향성 평가에 관한 연구-시뮬레이션 기반 접근','유재욱*(성균관대), 김문기, 최재붕')
+      ]},
+      { name: '멀티스케일 해석과 설계', items: [
+        P('B44','전이학습과 평균장 균질화를 활용한 데이터 기반 멀티스케일 유한요소 해석 가속화','이원주*(인하대), 김수한, 신현성'),
+        P('B45','공유 접합을 고려한 고분자 나노복합재료의 파괴 거동을 평가하기 위한 멀티스케일 해석','이지훈*(인하대), 왕호림(시안교통대), 김재훈, 신현성'),
+        P('B46','적합직교분해와 트랜스포머 모델을 이용한 탄소성 복합재에 대한 데이터 기반 멀티스케일 유한요소 해석 가속화','김수한*(인하대), 신현성'),
+        P('B47','신경망 보조 차원 축소와 주파수-시간 영역 상호변환을 이용한 선형 점탄성 재료의 시간영역 미시 응답 예측 가속화','심현종*(인하대), 이원주, 신현성'),
+        P('B48','Revealing the extrinsic toughening mechanisms in dendritic polyethyleneimine-modified CFRPs: a molecular dynamics study','자요휘*(인하대), 왕호림(시안교통대), 이지훈, 김재훈, 신현성')
+      ]},
+      { name: '멀티피직스 시스템 해석과 설계', items: [
+        P('B49','비압축성 연질 재료가 수중 음향 메타구조의 흡음 특성에 미치는 영향','최혜정*(부경대), 정현준, 박용호, 현재엽'),
+        P('B50','스페로이드 형성을 위한 미세유체 플랫폼내 유동 및 전달 특성 연구','이민정*(서강대), 이상훈(국립한밭대), 송지환'),
+        P('B51','효과적인 화학-광열요법을 위한 플라즈모닉 나노 구조체의 쉘 배열 기반 광학 및 광열 특성 분석','정희수*(서강대 대학원), 전봉현(건국대), 송지환')
+      ]},
+      { name: '생체역학', items: [
+        P('B52','Effect of Needle Insertion Angle on Tissue Deformation and Tearing in a Multilayer Skin Model Using Cohesive Zone Modeling','사비타*(명지대), 신창섭, 김태형, 곽대순(가톨릭대), 이택상')
+      ]},
+      { name: '복합재역학', items: [
+        P('B53','Weaving 및 Trimming 기반 열전달 경로 설계를 통한 Pitch 탄소복합재의 두께 방향 열전도 향상 및 해석','전재안*(인하대), 이주홍, 박일경(항공우주연구원), 이상의'),
+        P('B54','물리 기반 결함 지표와 머신러닝을 활용한 재활용 자기강화복합재의 기계적 물성 예측','곽재영*(UNIST), 조규은, 임성우, Bjoem Beck(Fraunhofer ICT), Frank Henning(Fraunhofer ICT), 박영빈')
+      ]}
+    ]
+  },
+  C: {
+    summary: '2026년 5월 7일 (목) 13:30–14:45 · 제7발표장(릴리2) · 53편',
+    groups: [
+      { name: '구조설계 및 CAE', items: [
+        P('C01','다층 격자 구조의 배열 순서에 따른 전자기파 흡수 성능 및 기계적 거동 분석','윤효의*(이화여대), 임다현(UC Berkeley), Grace X. Gu(UC Berkeley), 이상륜'),
+        P('C02','적응적 모드 전환 베이지안 최적화를 이용한 광대역 전자기파 흡수 격자 구조의 형상 최적화','유한설*(이화여대)'),
+        P('C04','핫스탬핑 공정에서 슬라이딩 속도가 접촉 계면의 열-기계적 거동에 미치는 영향','정기호*(인천대), 박준영, 이시열, 이희건, 전태성, 김백진'),
+        P('C05','Taguchi 실험계획법과 메타모델을 활용한 벤틸레이티드 브레이크 디스크의 열-구조 성능 최적 설계','이성혜*(건국대), 허준, 김창완'),
+        P('C06','이직률 예측을 위한 ML 기반 특징 변환을 활용한 데이터 증강: 비선형 모델링 효과','임연희*(전남대)'),
+        P('C07','다각형 고속 전기방사 시스템의 설계 최적화를 위한 노즐 유형에 따른 유한요소 해석','신지은*(전북대), 이정호, 이현지, 오진, 유건이, 박찬희'),
+        P('C08','웨어러블 로봇용 코어리스 마이크로 모터의 구조 분석에 관한 연구','안서연*(고등기술연구원), 정석환'),
+        P('C09','삼중 주기적 최소 곡면 구조의 전자기적 특성 분석을 위한 적정 해석 모델 생성 방법 평가','범종찬*(조선대 대학원), 안동규'),
+        P('C10','Investigation of the Effect of the Design of Multi-Layer Non-Stochastic Lattice Structures on Flow Characteristics','기데온 사이먼 엠두마*(조선대 일반대학원), 범종찬, 안동규, 정영달'),
+        P('C11','방위산업용 드론의 피탐지 능력 향상을 위한 유동/위상최적화 설계','이다영*((주)메이크), 양철승'),
+        P('C12','상태기반정비(Condition Based Maintenance)를 위한 축소 기반 가상센싱 기법 개발','전수현*(충남대), 장성민, 김수정, 오주애'),
+        P('C13','물리정보 신경망을 활용한 압전 진동에너지 수확 장치의 전기 출력 예측','김재은*(대구가톨릭대)'),
+        P('C14','파라메트릭 PINN 기반 점탄성 구조의 에너지 소산 극대화를 위한 재료 파라미터 설계','노용준*(강원대), 윤경수'),
+        P('C15','절단된 구형 쉘의 스냅스루 불안정성을 활용한 대유량 소프트 펌프','이병호*(POSTECH), 이안나'),
+        P('C16','선형화된 루프 표현법 기반 위상최적화에서의 전역 최적성','박상훈*(KAIST), 장인권'),
+        P('C17','18650 원통형 리튬이온전지의 충방전 열응답 해석을 위한 데이터 기반 전기화학-열 결합 모델 개발','김동민*(KAIST), 김재희(한동대), 하진호, 장영환, 김다인, 이윤구'),
+        P('C18','위상최적설계 기반 차량 경로 최적화에 대한 선형 정식화','김창영*(KAIST), 장인권'),
+        P('C19','응력 및 변형률 상태 분석 기반 인장시험편 유효 두께 평가','윤준섭*(한국생산기술연구원), 김민기'),
+        P('C20','다중 재료 적층제조의 재료 전환 저감을 위한 위상최적화','신승헌*(UNIST), 고병현, 정하영')
+      ]},
+      { name: '인공지능/머신러닝', items: [
+        P('C21','Unsupervised Anomaly Detection in Industrial Robot Servomotors via Time–Frequency Images and High-Frequency-Preserving CAE','천유빈*(동국대), 전성현, 김흥수'),
+        P('C22','Uncertainty-Aware Exploration of Mechanical Properties in Spinodoid Architected Materials via Heteroscedastic Gaussian Process Regression','박민우*(KAIST), 박준서, 유승화'),
+        P('C23','이질적 레퍼런스의 조형 원리 구조화를 통한 패턴 디자인 생성 프레임워크','이유빈*(KAIST), 강남우'),
+        P('C24','그래프 기반 판금 부품 설계의 제조 가능성 평가 프레임워크','오동훈*(KAIST), 강남우'),
+        P('C25','제약 조건을 고려한 3차원 대규모 배치 최적화를 위한 하이브리드 심층 강화학습','김지용*(KAIST), 김석준, 강남우'),
+        P('C26','내부 구조 요소의 수와 형상 변화를 고려한 트랜스포머 기반 신경 연산자 모델','오예니*(KAIST), 이종목(POSTECH), 박범수(서울과기대), 이승철'),
+        P('C27','Natural Language-Based Objective Function Formulation for the Optimal Design of Nonlinear Dynamic Metamaterials','신지혜*(KAIST), 이송호, 유승화'),
+        P('C28','계층 분석법을 활용한 데이터 기반 철도 선로 상태 평가 프레임워크','조예슬*(KAIST), 박장섭, 강남우'),
+        P('C29','제조업 데이터 부족 문제 극복을 위한 연합학습 기반 대리모델 구축','이동언*(KAIST), 강남우'),
+        P('C30','1D CNN 및 ResNet 기반 배관 핀홀 판별 연구','한순우*(한국원자력연구원), 강토, 김경모, 문성인'),
+        P('C31','인공신경망을 이용한 무인기 대기 자료 시스템 보정','서영록*(한국항공우주산업), 최남준, 이관중(서울대)'),
+        P('C32','3차원 실내 유동장 예측을 위한 트랜스포머 기반 연산자 신경망','유휘상*(한양대), 오기용(한양대(서울))'),
+        P('C33','피부 피판 재건술의 응력장 예측을 위한 DeepONet 기반 대리모델','임동해*(명지대), 김태형, 이승욱, Tsabita Fidnillah, 이택상'),
+        P('C34','텍스트 기반 다중스케일 위상최적화: TPMS 기반 기계적 이방성 설계','김상혁*(KAIST), 김한수(가천대), 강남우'),
+        P('C35','Model-101: A Compact Surrogate Model for Energy Prediction in Ni-Based Alloy Surface Slabs','MOUL VICHHIKA*(경희대)'),
+        P('C36','LLM 기반 저온 식각 가설 생성 및 공정 지능화','서바울*(UNIST), 김태민, 선우영민, 유정재, 정홍식, 김병조')
+      ]},
+      { name: '전산역학', items: [
+        P('C37','플라즈마 식각을 위한 AI 에이전트 기반 이온 전달 멀티스케일 시뮬레이션 자동화 프레임워크','선우영민*(UNIST), 엄상민, 김병조'),
+        P('C38','고엔트로피 합금 물성의 전산 특성화를 위한 비제약 기호 회귀의 데이터 기반 예측 성능 평가','조현진*(국립창원대), 신홍철(고려대), 윤태영'),
+        P('C39','Direct Simulation Monte Carlo(DSMC) 기반 Trench 구조 내 에너지 전달 거동 분석','이윤수*(UNIST), 김병조'),
+        P('C40','드럼세탁기의 세탁물 동역학 시뮬레이션: 소비 전력 및 세척력 분석','전성빈*(국립금오공과대), 박준영'),
+        P('C41','극성 표면 In2O3 박막 트랜지스터에서의 CO2 센싱 성능 향상 메커니즘 규명','신정민*(전남대), 차진혁'),
+        P('C42','건식 전극 제조를 위한 롤 프레스 시뮬레이션 구축','이승우*(국립금오공과대)'),
+        P('C43','Neural Network Potential-Based Molecular Dynamics Simulation for Investigating the Formation Mechanism and Spatial Distribution of LiF-Rich SEI Induced by FEC Additives in Lithium Metal Battery Electrolytes','김광식*(전남대), 차진혁'),
+        P('C44','회전기기의 기계학습용 결함 데이터 인공적 생성을 위한 베어링 가변 강성 모델의 다물체동역학 시뮬레이션 예비연구','박상진*(한국원자력연구원), 장대식, 이정한, 박진호'),
+        P('C45','HVAC 온도성능 개선을 위한 CFD 자동평가 워크플로 개발 및 해석-시험 상관관계 검증','황수진*(현대위아), 안태현, 이정선')
+      ]},
+      { name: '멀티스케일 해석과 설계', items: [
+        P('C46','확산-기계 결합을 고려한 SiOx 복합 음극에서 소성 변형 영향 분석','석무겸*(중앙대), 송현석, 박성수, 문장혁'),
+        P('C47','Entropy-Driven Electrolyte Design for Enhanced Ionic Conductivity and SEI Stability in Sub-Zero Rechargeable Lithium Batteries','장홍준*(중앙대), 문장혁')
+      ]},
+      { name: '통계기반 해석 및 설계', items: [
+        P('C48','SCADA 보정 웨이크 모델 기반 풍력단지 저차원 주변 상태 추론을 위한 2단계 프레임워크','임은서*(홍익대 과학기술대), 김재광, 정용수'),
+        P('C49','가속 수명 데이터 기반 배터리 팩 단위 전압 예측 및 SPMe 보정 프레임워크','김성제*(홍익대 과학기술대), 김재광, 정용수'),
+        P('C50','CBM장치를 활용한 고속철도차량 주행장치 핵심부품 고장모드 특성 분석','정시헌*(한국철도기술연구원), 홍성광')
+      ]},
+      { name: '재료역학', items: [
+        P('C51','기계학습을 이용한 막 굽힘 실험을 통한 박막의 기계적 물성 추정','주현우*(전북대), 김호장(KAIST 기계공학과), 박정훈, 심기동, 최재훈'),
+        P('C52','막 굽힘 실험 기반 형상기억합금 박막의 기계적 특성 평가','이예은*(전북대), 유혜민(KAIST), LEE ZHUO FENG(KAIST), 심기동, 최재훈')
+      ]},
+      { name: '실험역학', items: [
+        P('C53','반사성 저-텍스처 금속 표면 압입흔의 기하학적 3차원 형상 복원을 위한 이미지 품질 평가','김윤성*(한국생산기술연구원), 황정하(알엑스(주)), 이강헌(알엑스(주)), 김민기'),
+        P('C54','크레즐링 오리가미의 빔 기반 역학 모델링','김민수*(POSTECH), 김성현, 이안나')
+      ]}
+    ]
+  }
+};
+
+// Time slots for each block (15-min granularity)
+const SLOTS_15 = ['09:00','09:15','09:30','09:45','10:00'];
+const SLOTS_15B = ['10:45','11:00','11:15','11:30','11:45'];
+const SLOTS_15C = ['13:30','13:45','14:00','14:15','14:30'];
+
+// Each block: { time, slots, sessions: [ { roomIdx, cat, name, chair, talks: [...] } ] }
+// For poster/tutorial that don't fit 15-min slots, mark with `merged: true`
+const SCHEDULE = {
+  thu: [
+    {
+      blockTime: '09:00 ~ 10:15',
+      slots: SLOTS_15,
+      sessions: [
+        { roomIdx:0, cat:'keynote', name:'신진연구자 초청 발표 1', chair:'장성민(충남대)',
+          segments: [
+            { startSlot:0, span:2, label:'09:00 ~ 09:25', talk: T('26CA-Th01A01','Robust Diagnosis for Engineering Systems: Integrating Signal Processing, Probabilistic Modeling, and AI','나규민*(부경대)',{invited:true}) },
+            { startSlot:2, span:2, label:'09:25 ~ 09:50', talk: T('26CA-Th01A02','기계학습 원자간 포텐셜을 활용한 반도체 및 에너지 소재의 원자 수준 해석','민경민*(연세대)',{invited:true}) },
+            { startSlot:4, span:1, label:'09:50 ~ 10:15', talk: T('26CA-Th01A03','인공지능 기반 프로그래머블 구조 재료 설계: 기계적 최적화에서 다기능 시스템으로의 확장','이상륜*(이화여대)',{invited:true}) }
+          ]},
+        { roomIdx:1, cat:'normal', name:'구조설계 및 CAE 1', chair:'정길언(한밭대)',
+          talks: [
+            T('26CA-Th02A01','원자로 헤드 스터드 체결 순서 체계 단축을 위한 유한요소해석 연구','김형주(이엔에스), 윤지홍, 김성훈(남부대), 이보헌(무진기연)',{invited:true}),
+            T('26CA-Th02A02','Sensitivity-Free Binary Topology Optimization via Reinforcement Learning','정길언(한밭대)',{invited:true}),
+            T('26CA-Th02A03','AI 기반 차세대 설계 서비스를 위한 대리모델 개발','백대유*(한국선급), 김종오, 장미선, 장화섭'),
+            T('26CA-Th02A04','베이지안 최적화 기반 극저온 액화 수소 탱크의 최적설계','차송현*(선박해양플랜트연구소), 김현석, 김민근(서울과기대)'),
+            T('26CA-Th02A05','FMVSS 208 기반 정면 충돌 해석을 통한 디스플레이 통합형 스티어링 휠의 충돌 안전성 평가','안서연*(고등기술연구원), 정희숙, 고동신')
+          ]},
+        { roomIdx:2, cat:'normal', name:'인공지능/머신러닝 1', chair:'양선웅(한양대)',
+          talks: [
+            T('26CA-Th03A01','Aerodynamic Design Optimization of Martian Rotorcraft Airfoil using AI','양선웅*(한양대), 박성중(서울대), 이관중(서울대)',{invited:true}),
+            T('26CA-Th03A02','리튬 이온 배터리 증분용량 곡선의 Convolutional Autoencoder 모델 기반 열화 인자 추출을 통한 RUL 예측','허준(건국대), 김창완*(건국대)',{invited:true}),
+            T('26CA-Th03A03','위상을 먼저 고정하고 변형하는 미분가능 메시 최적화 기법','박규열*(KAIST), 강남우(KAIST)'),
+            T('26CA-Th03A04','운전속도 변화 환경에서의 회전체 고장진단을 위한 연속 도메인 적응 기법','김용채*(서울대) 외 6인',{fullAuthors:'김용채*(서울대), 김주현(서울대), 박민석(서울대), 임우리(서울대), 최종현(서울대), 정준하(서울대), 윤병동(서울대)'}),
+            T('26CA-Th03A05','3DEXPERIENCE 플랫폼에서의 MODSIM 기반 시뮬레이션 머신 러닝에 관한 연구','연동윤*(다쏘시스템) 외 4인',{fullAuthors:'연동윤*(다쏘시스템), 한상배(다쏘시스템), 정재욱(다쏘시스템), 임설희(다쏘시스템), 김성훈(브이피케이)'})
+          ]},
+        { roomIdx:3, cat:'contest', name:'학생경진대회 1세션 - B조', chair:'이동진(한양대), 신동일(POSTECH)',
+          merged: true, mergedSpan: 5,
+          mergedDesc: '10편의 학생 발표가 진행됩니다.',
+          talks: [
+            T('26CA-Th04A01','제로샷 리브 설계: 학습 불필요 생성모델과 위상최적화의 융합','권용민(KAIST)'),
+            T('26CA-Th04A02','고엔트로피 합금 물성의 전산 특성화를 위한 비제약 기호 회귀의 데이터 기반 예측 성능 평가','조현진(창원대)'),
+            T('26CA-Th04A03','아밀로이드 섬유의 기계적 약화를 위한 Transformer-강화학습 기반 decoy peptide 설계','김채현(창원대)'),
+            T('26CA-Th04A04','동적 Few-Shot Prompting 기반 LLM을 활용한 이중 페로브스카이트 공간군 예측','박종원(KAIST)'),
+            T('26CA-Th04A05','열차폐 코팅 시스템에서 열생성산화막 성장의 다중물리 모델링 개발과 설계 변수 최적화','이승욱(명지대)'),
+            T('26CA-Th04A06','위상장 데미지 모델을 활용한 다중물리 열차폐코팅 유한요소모델 개발','신창섭(명지대)'),
+            T('26CA-Th04A07','전자기장 시뮬레이션 기반 나노구조 설계: 바이오 및 독성센서 응용','채경환(성균관대)'),
+            T('26CA-Th04A08','상분리 소프트 재료의 다중 유리 전이 조절','이기수(KAIST)'),
+            T('26CA-Th04A09','강성행렬을 이용한 굽힘파 기반 포노닉 빔의 센서 및 액추에이터 성능 예측 모델','이민수(숭실대)'),
+            T('26CA-Th04A10','고분자전해질 연료전지의 성능 평가를 위한 다중 충실도 심층 연산자 신경망','김형인(숭실대)')
+          ]},
+        { roomIdx:4, cat:'contest', name:'학생경진대회 1세션 - A조', chair:'차진혁(전남대), 김한수(가천대)',
+          merged: true, mergedSpan: 5,
+          mergedDesc: '10편의 학생 발표가 진행됩니다.',
+          talks: [
+            T('26CA-Th05A01','저주파 광대역 밴드갭 구현을 위한 격자 구조의 베이지안 최적화 기반 헥사 설계','윤효의(이화여대)'),
+            T('26CA-Th05A02','이중 경로 간섭 메커니즘을 이용한 가변형 오리가미 기반 음향 메타물질 설계','변창섭(서울과기대)'),
+            T('26CA-Th05A03','전류기반 고주파 인지 CAE를 이용한 산업용 로봇 서보모터의 비지도 고장 검출','천유빈(동국대)'),
+            T('26CA-Th05A04','원거리 초음파 집속을 위한 다중 전극 패턴 레벨셋 위상최적화','박용호(부경대)'),
+            T('26CA-Th05A05','주파수 축 토큰 학습 기반 회전체 파운데이션 모델','채민석(서울대)'),
+            T('26CA-Th05A06','3차원 실내 유동장 예측을 위한 트랜스포머 기반 연산자 신경망','유휘상(한양대)'),
+            T('26CA-Th05A07','리튬 이온 배터리 셀 간 예후 및 상태 관리를 위한 임시 분할 앙상블 접근법','Mohad Tanveer(동국대)'),
+            T('26CA-Th05A08','충돌 응답 예측 및 HIC 산출을 위한 딥러닝 기반 대리모델 개발','전갑승(동국대)'),
+            T('26CA-Th05A09','CoCrCuFeNi 고엔트로피 합금에서 헬륨 버블이 기계적 거동에 미치는 역할에 관한 분자동역학 연구','문찬혁(창원대)'),
+            T('26CA-Th05A10','적층 복합재의 손상 영역 국소화를 위한 멀티헤드 어텐션 트랜스포머 기반 방법','Muhammad Haris Yazdani(동국대)')
+          ]},
+        { roomIdx:5, cat:'special', name:'[특별세션] LLM 에이전트 및 응용 1', chair:'임재혁(경희대)',
+          talks: [
+            T('26CA-Th06A01','도메인 지식 통합 멀티 에이전트 시스템을 통한 이중 페로브스카이트계 물질 탐색','이인효*(KAIST), 이준형, 박종원, 신준희, 유승화',{fullAuthors:'이인효*(KAIST), 이준형(KAIST), 박종원(KAIST), 신준희(KAIST), 유승화(KAIST)'}),
+            T('26CA-Th06A02','대형언어모델을 활용한 사출성형 현장 지식 전이 시스템의 구현 및 성능 개선','이준형*(KAIST), 김준영, 김희규, 이인효, 유승화',{fullAuthors:'이준형*(KAIST), 김준영(고등기술연구원), 김희규(KAIST), 이인효(KAIST), 유승화(KAIST)'}),
+            T('26CA-Th06A03','AI 기반 대화 인터페이스를 통한 재프로그래밍 가능한 소재 제어','최준규*(KAIST)'),
+            T('26CA-Th06A04','로컬 LLM 기반 Abaqus MCP 연동 FEA 자동화 시스템 고도화 전략','김은현*(경희대), 임재혁',{fullAuthors:'김은현*(경희대), 임재혁(경희대)'}),
+            T('26CA-Th06A05','초음파 비파괴검사를 위한 ReAct 기반 LLM 에이전트 프레임워크','MUNIR NAUMAN*(GIST) 외 4인',{fullAuthors:'MUNIR NAUMAN*(GIST), 한석규(GIST), FAROOQ SIDDIQUE MUHAMMAD(GIST), 오아린(GIST), 오현석(GIST)'})
+          ]},
+        { roomIdx:6, cat:'poster', name:'포스터 세션 A', chair:'송진우, 진수영, 권준표, 김영성',
+          merged: true, mergedSpan: 5, posterKey: 'A',
+          mergedDesc: '53편의 포스터가 전시됩니다. 카테고리: 구조설계 및 CAE (22편), 인공지능/머신러닝 (15편), 전산역학 (1편), 멀티스케일 (3편), 멀티피직스 (5편), 통계기반 (3편), 기타 (5편).'}
+      ]
+    },
+    { breakRow: true, time: '10:15 ~ 10:45', label: '휴식' },
+    {
+      blockTime: '10:45 ~ 12:00',
+      slots: SLOTS_15B,
+      sessions: [
+        { roomIdx:0, cat:'keynote', name:'신진연구자 초청 발표 2', chair:'박준영(금오공대)',
+          segments: [
+            { startSlot:0, span:2, label:'10:45 ~ 11:10', talk: T('26CA-Th01B01','물리 기반 다중스케일 모델링을 위한 연산자 학습으로서의 Deep Material Network','신동일*(POSTECH)',{invited:true}) },
+            { startSlot:2, span:2, label:'11:10 ~ 11:35', talk: T('26CA-Th01B02','3차원 직조형 COF를 활용한 기능성 나노복합체 설계','권준표*(아주대)',{invited:true}) },
+            { startSlot:4, span:1, label:'11:35 ~ 12:00', talk: T('26CA-Th01B03','접촉–분리 기반 직류 마찰전기 나노발전기의 다물리 및 역학적 거동 해석','김영성*(동국대)',{invited:true}) }
+          ]},
+        { roomIdx:1, cat:'special', name:'[특별세션] AI based CAE', chair:'송진우(한양대)',
+          talks: [
+            T('26CA-Th02B01','기본 적층 유도 복합 재료 구조 신뢰성 최적화 전략','Haichao An*(Beijing Institute of Technology)',{invited:true}),
+            T('26CA-Th02B02','바이오공정 Physical AI 구현을 위한 AI 기반 Digital Twin 기술 개발','민준원, 강태욱, 김동철*(서강대)',{invited:true,fullAuthors:'민준원((주)큐빅케이), 강태욱(서강대), 김동철*(서강대)'}),
+            T('26CA-Th02B03','트랜스포머 기반 탄성 메타표면 역설계','조수호*(동국대) 외 5인',{invited:true,fullAuthors:'조수호*(동국대), 김태훈(서울대), 이동휴(서울대), 한주환(서울대), 김세희(서울대), 윤병동(서울대)'}),
+            T('26CA-Th02B04','Impact-Induced Pulse Power Capability Degradation in Lithium-Ion Cells','황샹린*(Dongguk University), Heung Soo Kim',{fullAuthors:'황샹린*(Dongguk University), Heung Soo Kim(Dongguk University)'}),
+            T('26CA-Th02B05','다종 리간드 기반 실레인 머신러닝 원자간 포텐셜: 융점·비점 예측 및 전이 가능성 평가','강승표*(연세대) 외 5인',{fullAuthors:'강승표*(연세대), 송준호(연세대), 황정재(연세대), 한정임(삼성종합기술원), 원중희(삼성종합기술원), 민경민(연세대)'})
+          ]},
+        { roomIdx:2, cat:'special', name:'[특별세션] Physical AI 1', chair:'윤길호(한양대)',
+          talks: [
+            T('26CA-Th03B01','위상 최적화 및 상변화 물질을 활용한 하중 적응형 가변 강성 구조','이창민*(한양대) 외 3인',{fullAuthors:'이창민*(한양대), 윤길호(한양대), 김동욱(한양대), 김예슬(한양대)'}),
+            T('26CA-Th03B02','잔차 신경망 기반 RBF 대리 모델을 이용한 데이터 기반 PDE 식별','이찬구*(한양대), 윤길호',{fullAuthors:'이찬구*(한양대), 윤길호(한양대)'}),
+            T('26CA-Th03B03','Haar 웨이블릿 기저 함수를 활용한 신경연산자 기반 전체파형역전','신명*(한양대), 윤길호',{fullAuthors:'신명*(한양대), 윤길호(한양대)'}),
+            T('26CA-Th03B04','충돌 응답 예측 및 HIC 산출을 위한 딥러닝 기반 대리모델 개발','전갑승*(동국대), 이재훈',{fullAuthors:'전갑승*(동국대), 이재훈(동국대)'}),
+            T('26CA-Th03B05','PINN을 활용한 비선형 자기 액추에이터의 정적 및 동적 해석 기법 연구','배준호*(GIST), 이재욱',{fullAuthors:'배준호*(GIST), 이재욱(GIST)'})
+          ]},
+        { roomIdx:3, cat:'contest', name:'학생경진대회 2세션 - B조', chair:'손정우(금오공대), 이재훈(동국대)',
+          merged: true, mergedSpan: 5,
+          mergedDesc: '8편의 학생 발표가 진행됩니다.',
+          talks: [
+            T('26CA-Th04B01','이종 팔면체 마이크로구조체의 탄성 등방성','문제훈(KAIST)'),
+            T('26CA-Th04B02','저항성 고관절 엑소스켈레톤이 근력과 요추부하에 미치는 역할','이동환(서강대)'),
+            T('26CA-Th04B03','에너지 균형 스케일링 및 L-정규화 희소 복원 기반 기능기 가화 스플라인 차원 분해','허은호(한양대)'),
+            T('26CA-Th04B04','분자동역학 기반 PEGDE-Ionic Liquid 에폭시 시스템의 전기화학적 탈착 메커니즘 분석','박유진(창원대)'),
+            T('26CA-Th04B05','간섭 환경 내 설비 상태 관리를 위한 타겟 음향 신호 추출 기술','김주현(서울대)'),
+            T('26CA-Th04B06','프롬프트 확장 기반 지속 학습을 통한 베어링 결함 진단','임우리(서울대)'),
+            T('26CA-Th04B07','상변화 물질을 이용한 열적으로 가변 가능한 수중 음향 메타구조의 레벨셋 위상최적화','정현준(부경대)'),
+            T('26CA-Th04B08','다충실도 기반 DD-GPCE 대체모델의 꼬리 영역 보정을 통한 위험 회피 최적 설계','이결희(한양대)')
+          ]},
+        { roomIdx:4, cat:'contest', name:'학생경진대회 2세션 - A조', chair:'이재욱(GIST), 이승철(KAIST)',
+          merged: true, mergedSpan: 5,
+          mergedDesc: '10편의 학생 발표가 진행됩니다.',
+          talks: [
+            T('26CA-Th05B01','역역 절단 기법을 적용한 Char 연소 시스템의 OpInf 기반 저차원 모델링','우현중(한양대)'),
+            T('26CA-Th05B02','3D 프린팅된 디지털 재료의 대변형 미시역학','이승환(KAIST)'),
+            T('26CA-Th05B03','PDD-NARX 대체모델 기반 쿼드로터의 확률론적 모델예측제어','임규빈(한양대)'),
+            T('26CA-Th05B04','체심입방 결정 재료의 통계적 추론 기반 모델링','이승현(KAIST)'),
+            T('26CA-Th05C05','부분 방전 데이터를 활용한 DeepONet 기반 리튬이온배터리 상태 추정','권경륜(서울대)'),
+            T('26CA-Th05C06','모노도메인 액정 엘라스토머의 대변형 점탄성 거동','이정운(KAIST)'),
+            T('26CA-Th05C07','차원 축소 기반 심층 연산자 네트워크를 활용한 대형 스케일 구조물의 효율적 주파수 응답 예측','신호철(동국대)'),
+            T('26CA-Th05B08','대체 모델 기반 다중 에이전트 강화학습을 활용한 고차원 설계 최적화','장현호(한양대)'),
+            T('26CA-Th05B09','카테골이 흡착된 그래핀의 전기장 기반 탈착 메커니즘','정수민(창원대)'),
+            T('26CA-Th05B10','전기적 토크에 의해 유도된 아밀로이드-β K16 변이체의 비가역적 기계적 약화','임송희(창원대)')
+          ]},
+        { roomIdx:5, cat:'special', name:'[특별세션] LLM 에이전트 및 응용 2', chair:'하종문(아주대)',
+          talks: [
+            T('26CA-Th06B01','LLM 에이전트를 활용한 experts-knowledge 기반 베어링 결함 자동 진단','하종문*(아주대), 이도훈, 조민혁',{invited:true}),
+            T('26CA-Th06B02','자가 검증 기반 LLM 멀티에이전트 학술 문서 작성 및 서식 변환 파이프라인','이승훈*(경희대), 김은현, 임재혁'),
+            T('26CA-Th06B03','Claude Code Skills 기반 자율 교정 루프를 적용한 초소형위성 배치 자동화','김도우*(경희대), 김은현, 임재혁'),
+            T('26CA-Th06B04','LLM-assisted Multidisciplinary Design Optimization Framework for UAV Airfoils via MCP','Nguyen Viet Nghia*(전북대), 조해성'),
+            T('26CA-Th06B05','Mixture-of-Signal-Experts Model for Versatile Domain-specialized Large Language Model','이동원*(중앙대), 김기호, 이수영')
+          ]},
+        { roomIdx:6, cat:'poster', name:'포스터 세션 B', chair:'이수영, 이상륜, 김진욱, 김지선',
+          merged: true, mergedSpan: 5, posterKey: 'B',
+          mergedDesc: '54편의 포스터가 전시됩니다. 카테고리: 구조설계 및 CAE (22편), 인공지능/머신러닝 (15편), 전산역학 (6편), 멀티스케일 (5편), 멀티피직스 (3편), 생체역학 (1편), 복합재 (2편).'}
+      ]
+    },
+    { lunchRow: true, time: '12:00 ~ 13:30', label: '점심 시간 · LUNCH' },
+    {
+      blockTime: '13:30 ~ 14:45',
+      slots: SLOTS_15C,
+      sessions: [
+        { roomIdx:0, cat:'normal', name:'만찬 준비', chair:'',
+          merged: true, mergedSpan: 5,
+          mergedDesc: '13:30 ~ 14:45 만찬 준비를 위한 테이블 셋팅이 진행됩니다.'},
+        { roomIdx:1, cat:'special', name:'[특별세션] Physical AI 2', chair:'이재욱(GIST)',
+          talks: [
+            T('26CA-Th03C01','주파수 축 토큰 학습 기반 회전체 파운데이션 모델','채민석*(서울대) 외 11인',{fullAuthors:'채민석*(서울대), 김용채(서울대), 이상경(서울대), 김주현(서울대), 강지헌(서울대), 임우리(서울대), 최종현(서울대), 박준호(서울대), 박찬희(서울시립대), 하종문(아주대), 윤병동(서울대)'}),
+            T('26CA-Th03C02','변형률 평활화 요소법을 활용한 열전도 해석','김기환*(금오공대)'),
+            T('26CA-Th03C03','양방향 접힘 가능한 두꺼운 오리가미 설계 방법론','양두원*(POSTECH), 김승민, 이안나',{fullAuthors:'양두원*(POSTECH), 김승민(서울대), 이안나(POSTECH)'}),
+            T('26CA-Th03C04','Fatigue Life Prediction of Type IV Hydrogen Storage Tanks using a multi-scale approach','한현석*(GIST)'),
+            T('26CA-Th03C05','Layer-wise Attentive Physics-informed Deep Operator Learning for Thermal Spreading','윤창현*(중앙대) 외 3인',{fullAuthors:'윤창현*(중앙대), 이재륜(중앙대), 라동현(중앙대), 이수영(중앙대)'})
+          ]},
+        { roomIdx:2, cat:'special', name:'[특별세션] 현대자동차', chair:'이동진(한양대)',
+          talks: [
+            T('26CA-Th04C01','랩타임 단축을 위한 고성능 HEV 운영 전략 연구','김다솜*(현대차) 외 5인',{invited:true,fullAuthors:'김다솜*(현대차), 최원세(현대차), 김대광(현대차), 우민수(현대차), 김우중(현대차), 김용재(현대차)'}),
+            T('26CA-Th04C02','차량 설계 제원 DB 기반 벨지안 하중 예측 컨셉 모델 개발','차원석*(현대차), 유동현, 김주완',{invited:true,fullAuthors:'차원석*(현대차), 유동현(현대차), 김주완(현대차)'}),
+            T('26CA-Th04C03','로드노이즈 성능을 위한 형상 최적화 워크플로우 개발 연구','강성호*(현대차), 김진홍, 김종규',{invited:true,fullAuthors:'강성호*(현대차), 김진홍(현대차), 김종규(현대차)'}),
+            T('26CA-Th04C04','반사방지 코팅 성능 평가를 위한 LiDAR 신호 기반 물리 모델','송진우*(동국대), 박제우, 김흥수',{invited:true,fullAuthors:'송진우*(동국대), 박제우(현대차), 김흥수(동국대)'}),
+            T('26CA-Th04C05','Surrogate-Driven RBDO of a Suspension Lower Control Arm Using MBD–FEM Co-Simulation','권태욱(한양대), 이동진*(한양대)')
+          ]},
+        { roomIdx:3, cat:'special', name:'[특별세션] Physics-Informed ML', chair:'이승철(KAIST)',
+          talks: [
+            T('26CA-Th05C01','시간 인과성이 강화된 물리지식기반 심층 연산자 신경망을 활용한 시간 의존 PDE의 실시간 응답 추론','노홍균*(KAIST), 임재혁(경희대), 이승철',{fullAuthors:'노홍균*(KAIST), 임재혁(경희대), 이승철(KAIST)'}),
+            T('26CA-Th05C02','물리 지식 기반 머신러닝을 활용한 결정립 성장 및 스피노달 분해의 장시간 미세조직 진화 거동 모사','박재정*(KAIST) 외 4인',{fullAuthors:'박재정*(KAIST), 박현호(POSTECH), 노홍균(KAIST), 김경덕(POSTECH), 이승철(KAIST)'}),
+            T('26CA-Th05C03','정밀 DIC 측정을 위한 확산 모델 기반 고충실도 스펙클 패턴 복원','이지헌*(경희대), 이승리, 박정훈, 임재혁',{fullAuthors:'이지헌*(경희대), 이승리(경희대), 박정훈(경희대), 임재혁(경희대)'}),
+            T('26CA-Th05C04','물리 지식 기반 신경 연산자를 이용한 포탄 항력 계수 산출 가속화','박민우*(KAIST) 외 7인',{fullAuthors:'박민우*(KAIST), 박재정(KAIST), 노홍균(KAIST), 박용인(풍산), 정인호(풍산), 정남기(풍산), 이영기(풍산), 이승철(KAIST)'}),
+            T('26CA-Th05C05','그래프 신경망의 선상가열 온도장 예측 일반화 성능 향상을 위한 물리제약 자기지도학습 프레임워크','김명성*(UNIST), 정하영',{fullAuthors:'김명성*(UNIST), 정하영(UNIST)'})
+          ]},
+        { roomIdx:5, cat:'special', name:'[특별세션] LLM 에이전트 및 응용 3', chair:'이수영(중앙대)',
+          talks: [
+            T('26CA-Th06C01','자기수정 루프를 활용한 2D 도면으로부터의 파라메트릭 CAD 복원 및 최적화','장원재*(KAIST), 강남우',{fullAuthors:'장원재*(KAIST), 강남우(KAIST)'}),
+            T('26CA-Th06C02','제조성을 고려한 수정 가능한 파라메트릭 CAD 워크플로우 생성을 위한 다중 에이전트 협업 프레임워크','이유림*(KAIST), 강남우',{fullAuthors:'이유림*(KAIST), 강남우(KAIST)'}),
+            T('26CA-Th06C03','멀티 에이전트 기반 비정형 이미지 생성으로 활용한 IPMSM 형상 최적화','한진성*(KAIST), 양선웅(한양대), 강남우',{fullAuthors:'한진성*(KAIST), 양선웅(한양대), 강남우(KAIST)'}),
+            T('26CA-Th06C04','배터리 전극 시뮬레이션 자동화를 위한 스킬 기반 에이전트 시스템','정인영*(중앙대), 송현석, 문장혁',{fullAuthors:'정인영*(중앙대), 송현석(중앙대), 문장혁(중앙대)'}),
+            T('26CA-Th06C05','언어 모델과 그래프 구조 결정 표현의 융합을 통한 이차원 재료 기계적 물성 예측','이민형*(KAIST) 외 3인',{fullAuthors:'이민형*(KAIST), 박재정(KAIST), 민경민(연세대), 이승철(KAIST)'})
+          ]},
+        { roomIdx:6, cat:'poster', name:'포스터 세션 C', chair:'정길언, 현재엽, 조수호, 진수영',
+          merged: true, mergedSpan: 5, posterKey: 'C',
+          mergedDesc: '53편의 포스터. 카테고리: 구조설계 및 CAE (20편), 인공지능/머신러닝 (16편), 전산역학 (8편), 멀티스케일 (2편), 통계기반 (3편), 재료역학 (2편), 실험역학 (2편), 연속체 (1편).'}
+      ]
+    },
+    { breakRow: true, time: '14:45 ~ 15:00', label: '휴식' },
+    { specialRow: true, time: '15:00 ~ 18:00',
+      label: '총회 · 기조강연 · 축사 · 시상식 · 초청강연 · 특별행사 (제1·2발표장)',
+      desc:`<p style="margin-bottom:8px"><strong>15:00–15:30</strong> 개회사, 축사, 시상식, 협찬사 소개 및 감사패 증정 — 좌장: 박준영(부문 수석부회장)</p>
+            <p style="margin-bottom:8px"><strong>15:30–16:50</strong> 기조강연 — 김영옥 상무(HD현대그룹 CAIO), 김영주 박사(한국지질자원연구원)</p>
+            <p style="margin-bottom:8px"><strong>16:50–17:00</strong> 휴식</p>
+            <p><strong>17:00–18:00</strong> 초청강연 및 특별행사 — 변혁기술(T2) 포럼 강연 (김현규 교수, 서울과기대), JMST 홍보, 경품추첨 A</p>` },
+    { specialRow: true, time: '18:00 ~ 19:30', label: '만찬 (제1·2발표장)', desc: '<p>참가자 만찬이 제1·2발표장에서 진행됩니다.</p>' },
+    { specialRow: true, time: '19:30 ~ 21:30', label: '이사회', desc: '<p>이사회 진행.</p>' }
+  ],
+
+  fri: [
+    {
+      blockTime: '09:00 ~ 10:15',
+      slots: SLOTS_15,
+      sessions: [
+        { roomIdx:0, cat:'tutorial', name:'튜토리얼', chair:'박찬희(서울시립대)',
+          segments: [
+            { startSlot:0, span:3, talk: T('26CA-Fr01A01','대규모 언어모델(LLM)의 이해: 구조와 학습 원리','박찬희(서울시립대)',{fullAuthors:'박찬희(서울시립대)'}), label:'09:00 ~ 09:50' },
+            { startSlot:3, span:1, isBreak:true, label:'휴식' },
+            { startSlot:4, span:1, talk: T('26CA-Fr01A02','지식과 행동을 갖춘 LLM: 검색증강(RAG), 온톨로지와 에이전트','박찬희(서울시립대)',{fullAuthors:'박찬희(서울시립대)'}), label:'10:00 ~ 10:50 (계속)' }
+          ]},
+        { roomIdx:1, cat:'normal', name:'구조설계 및 CAE 2', chair:'김동철(서강대)',
+          talks: [
+            T('26CA-Fr02A01','Prediction of temperature- and stress triaxiality dependent fracture behavior in microtube extrusion of Mg alloy','김진욱(서강대), 김동철',{fullAuthors:'김진욱(서강대), 김동철(서강대)'}),
+            T('26CA-Fr02A02','Physics-Informed DeepONet for Displacement Prediction of a TV Cover Bottom','조영준(서강대)'),
+            T('26CA-Fr02A03','전산 해석을 이용한 편측 고정 헬리컬 기어의 기어비 및 맞물림 위상에 따른 하중 분담률 및 응력 분포 연구','한승탁*(인팩), 임학송, 노한진',{fullAuthors:'한승탁*(인팩), 임학송(인팩), 노한진(인팩)'}),
+            T('26CA-Fr02A04','강화학습 기반 위상 최적설계를 통한 흡차음 음향 머플러 구조 설계 연구','김승민*(서울대), 오기승, 오주환',{fullAuthors:'김승민*(서울대), 오기승(서울대), 오주환(서울대)'}),
+            T('26CA-Fr02A05','Prediction of Loosening Life in Bolted Joint under Multiaxial Loading','이현우*(서강대) 외 4인',{fullAuthors:'이현우*(서강대), 김수완(현대자동차), 강해중(현대자동차), 김대옥(현대자동차), 김동철(서강대)'})
+          ]},
+        { roomIdx:2, cat:'normal', name:'인공지능/머신러닝 2', chair:'이상륜(이화여대)',
+          talks: [
+            T('26CA-Fr03A01','도로 포장체 FWD 역해석 문제의 PINN의 한계 및 미분가능 FEM 대안','최용진*(KAIST), 문현빈, 유승화',{fullAuthors:'최용진*(KAIST), 문현빈(KAIST), 유승화(KAIST)'}),
+            T('26CA-Fr03A02','A Study on Power Generation Forecasting for Wind Turbine Simulation Models Using Time-Series Deep Learning Model','류동흠*(피도텍) 외 6인',{fullAuthors:'류동흠*(피도텍), 김동건(피도텍), 이용빈(피도텍), 조수길(선박해양플랜트연구소), 임창혁(선박해양플랜트연구소), 하윤진(선박해양플랜트연구소), 김경환(선박해양플랜트연구소)'}),
+            T('26CA-Fr03A03','설계문서특화 LLM 서비스 개발','장미선*(한국선급), 김종오, 백대유, 장화섭',{fullAuthors:'장미선*(한국선급), 김종오(한국선급), 백대유(한국선급), 장화섭(한국선급)'}),
+            T('26CA-Fr03A04','Flow Matching과 Constrained A*를 결합한 전자회로에서의 글로벌 라우팅 방법론','진상훈*(KAIST), 이수민(전북대), 강남우',{fullAuthors:'진상훈*(KAIST), 이수민(전북대), 강남우(KAIST)'}),
+            T('26CA-Fr03A05','지식 그래프 기반 LLM을 활용한 설명 가능 항공기 개념 설계 프레임워크','나진수*(KAIST), 양선웅(한양대), 강남우',{fullAuthors:'나진수*(KAIST), 양선웅(한양대), 강남우(KAIST)'})
+          ]},
+        { roomIdx:3, cat:'normal', name:'재료역학', chair:'강건욱(연세대)',
+          talks: [
+            T('26CA-Fr04A01','THE EFFECT OF AN ATOMIC HYDROGEN ON THE KINK ACTIVATION IN A <111>{110} SCREW DISLOCATION IN BCC TUNGSTEN','강건욱*(연세대) 외 5인',{invited:true,fullAuthors:'강건욱*(연세대), 박형률(UIUC), 김상헌(연세대), Yifan Wang(OIST), Wei Cai(Stanford University), J.C Stinville(UIUC)'}),
+            T('26CA-Fr04A02','고무소재 물성 DB 구축 및 고무부품 통합설계시스템 개발','우창수*(한국기계연구원), 소혜미, 김상균',{fullAuthors:'우창수*(한국기계연구원), 소혜미(한국기계연구원 나노기계연구본부), 김상균(DRB 동일고무벨트)'}),
+            T('26CA-Fr04A03','모노도메인 액정 엘라스토머의 대변형 점탄성 거동','윤승희, 이정운*(KAIST), 고승규, 이호원, 조한솔',{fullAuthors:'윤승희(KAIST), 이정운*(KAIST), 고승규(서울대), 이호원(서울대), 조한솔(KAIST)'}),
+            T('26CA-Fr04A04','Large strain micromechanics of 3D-printed digital materials','이승환*(KAIST) 외 5인',{fullAuthors:'이승환*(KAIST), 이기수(KAIST), 윤승희(KAIST), 이수민(KAIST), 이전윤(KAIST), 조한솔(KAIST)'}),
+            T('26CA-Fr04A05','상분리 소프트 재료의 다중 유리 전이 조절','이기수*(KAIST), 이정운, 조한솔',{fullAuthors:'이기수*(KAIST), 이정운(KAIST), 조한솔(KAIST)'})
+          ]},
+        { roomIdx:4, cat:'normal', name:'전산역학 1', chair:'배수원(부산대)',
+          talks: [
+            T('26CA-Fr05A01','금속소재 원자계산에서의 국소구조 및 결함 검출법 연구','신영각, Vichhika Moul, 강건욱, 이병찬*(경희대)',{invited:true,fullAuthors:'신영각(연세대), Vichhika Moul(경희대), 강건욱(연세대), 이병찬*(경희대)'}),
+            T('26CA-Fr05A02','차원 축소 기반 심층 연산자 네트워크를 활용한 대형 스케일 구조물의 효율적 주파수 응답 예측','신호철*(동국대), 이재훈',{fullAuthors:'신호철*(동국대), 이재훈(동국대)'}),
+            T('26CA-Fr05A03','Electric Field–Driven Desorption Mechanism of Catechol on Graphene','정수민*(창원대)'),
+            T('26CA-Fr05A04','Topology-Based 구조 검증 기반 Multi-Anion Argyrodite 고체전해질 스크리닝','김민선*(연세대), 김주오, 민경민',{fullAuthors:'김민선*(연세대), 김주오(연세대), 민경민(연세대)'}),
+            T('26CA-Fr05A05','CoCrCuFeNi 고엔트로피 합금에서 헬륨 버블이 기계적 거동에 미치는 영향에 관한 분자동역학 연구','문찬혁*(창원대), 윤태영',{fullAuthors:'문찬혁*(창원대), 윤태영(창원대)'})
+          ]},
+        { roomIdx:5, cat:'normal', name:'멀티피직스 시스템 해석과 설계 1', chair:'조수호(동국대)',
+          talks: [
+            T('26CA-Fr06A01','분절 압전 배열 기반 음향양자 결정 내 다중 결함 밴드의 전기적 제어','조수호*(동국대)',{invited:true}),
+            T('26CA-Fr06A02','Latent Diffusion Model 기반 2차원-3차원 미세조직 재구성 및 역설계','이강현*(숭실대)',{invited:true}),
+            T('26CA-Fr06A03','D-T 핵융합 삼중수소 증식 블랑켓을 위한 삼중수소 이송 해석 시스템 구축 및 ITER HCCP TBM의 삼중수소 거동 예측','이용희*(한국핵융합에너지연구원) 외 5인',{fullAuthors:'이용희*(한국핵융합에너지연구원), Alice Ying(UCLA), 안무영(한국핵융합에너지연구원), 진형곤(한국원자력에너지연구원), 문성보(한국핵융합에너지연구원), 김명호(한국핵융합에너지연구원)'}),
+            T('26CA-Fr06A04','강성행렬을 이용한 굽힘파 기반 압전 결함 음향양자 보의 센서 및 엑추에이터 성능 예측 모델','이민수*(숭실대) 외 6인',{fullAuthors:'이민수*(숭실대), 백주희(한국전자기술연구원), 배한성(숭실대), 황도현(숭실대), 장진혁(숭실대), 조수호(동국대), 윤헌준(숭실대)'}),
+            T('26CA-Fr06A05','Continuous Flow for Discrete Topology: Generative Design Editing of IPMSM Rotors via VQ-VFM','정이교*(KAIST), 한진성, 진상훈, 강남우',{fullAuthors:'정이교*(KAIST), 한진성(KAIST), 진상훈(KAIST), 강남우(KAIST)'})
+          ]},
+        { roomIdx:6, cat:'normal', name:'멀티스케일 해석과 설계 1', chair:'김준식(금오공대)',
+          talks: [
+            T('26CA-Fr07A01','변분 사영 관점에서 본 고전적 보 이론의 재해석','김준식*(금오공대)',{invited:true}),
+            T('26CA-Fr07A02','Deformation Behavior in P3HT:SBS Blends via Coarse-Grained Modeling','최주희*(KAIST), 채정현, 오일권, 유승화',{fullAuthors:'최주희*(KAIST), 채정현(KAIST), 오일권(KAIST), 유승화(KAIST)'}),
+            T('26CA-Fr07A03','Direct FE² 및 Level-Set 기법을 사용한 멀티스케일 형상·위상 최적화','김기범*(서울과기대), 김현규',{fullAuthors:'김기범*(서울과기대), 김현규(서울과기대)'}),
+            T('26CA-Fr07A04','위상장 파괴 해석을 통한 코팅 섬유/에폭시 복합재의 파괴인성 향상 메커니즘 분석','김재훈*(인하대) 외 3인',{fullAuthors:'김재훈*(인하대), 왕호림(시안교통대학교), 이지훈(인하대), 신현성(인하대)'}),
+            T('26CA-Fr07A05','An efficient direct FE² method using equivalent quadratic-RVEs for the nonlinear multiscale analysis of hyperelastic materials','응웬람*(서울과기대), 김현규',{fullAuthors:'응웬람*(서울과기대), 김현규(서울과기대)'})
+          ]}
+      ]
+    },
+    { breakRow: true, time: '10:15 ~ 10:45', label: '휴식' },
+    {
+      blockTime: '10:45 ~ 12:00',
+      slots: SLOTS_15B,
+      sessions: [
+        { roomIdx:0, cat:'tutorial', name:'튜토리얼', chair:'임재혁(경희대)',
+          segments: [
+            { startSlot:0, span:1, isBreak:true, label:'휴식' },
+            { startSlot:1, span:3, talk: T('26CA-Fr01B01','로컬을 넘어 클라우드로: ICL과 환각 제어를 겸비한 멀티에이전트 기반 구조해석 워크플로우','임재혁(경희대)',{fullAuthors:'임재혁(경희대)'}), label:'11:00 ~ 11:50' },
+            { startSlot:4, span:1, isBreak:true, label:'휴식' }
+          ]},
+        { roomIdx:1, cat:'normal', name:'구조설계 및 CAE 3', chair:'김한수(가천대)',
+          talks: [
+            T('26CA-Fr02B01','적층제조 제약을 고려한 위상최적화 기반 항공기 좌석 다리 설계','김한수(가천대) 외 6인',{invited:true,fullAuthors:'김한수(가천대), Luke Crispo(Queen\'s University), Anuj Patel(Queen\'s University), Nicholas Galley(Queen\'s University), 연시모(한국생산기술연구원), 손용(한국생산기술연구원), Il Yong Kim(Queen\'s University)'}),
+            T('26CA-Fr02B02','유한요소법 기반 소형펀치 크리프-피로 상호손상 평가법 개발','김상엽*(성균관대), 이택상(명지대), 김문기',{fullAuthors:'김상엽*(성균관대), 이택상(명지대학교), 김문기(성균관대)'}),
+            T('26CA-Fr02B03','전자 부품 통합 UAV용 CFRP 적층 구조물의 방열 평가를 위한 3D/2D 복합 유한요소 열해석 및 실험적 검증','이주홍*(인하대) 외 4인',{fullAuthors:'이주홍*(인하대), 전재안(인하대), 박일경(한국항공우주연구원), 이상의(인하대)'}),
+            T('26CA-Fr02B04','Thermal-mechanical loading topology optimization with stress','Nguyen Minh Ngoc*(KAIST), Do-Nyun Kim',{fullAuthors:'Nguyen Minh Ngoc*(KAIST), Do-Nyun Kim(Seoul National University)'}),
+            T('26CA-Fr02B05','고속 카메라 연계 청소기 낙하 충격 해석 고도화','윤종민*(삼성전자) 외 4인',{fullAuthors:'윤종민*(삼성전자), 박유림(삼성전자), 임용빈(삼성전자), 박동휘(삼성전자), 최지훈(삼성전자)'})
+          ]},
+        { roomIdx:2, cat:'normal', name:'인공지능/머신러닝 3', chair:'김영성(동국대)',
+          talks: [
+            T('26CA-Fr03B01','물리 조건부 전문가 트랜스포머를 이용한 3차원 차량 공력장 예측','김상현*(KAIST), 양선웅(한양대), 강남우',{fullAuthors:'김상현*(KAIST), 양선웅(한양대), 강남우(KAIST)'}),
+            T('26CA-Fr03B02','품질 중심을 넘어 수익 극대화를 위한 사출성형 공정변수 최적화','김준영*(고등기술연구원), 유제천, 김희규, 유승화',{fullAuthors:'김준영*(고등기술연구원), 유제천(KAIST), 김희규(KAIST), 유승화(KAIST)'}),
+            T('26CA-Fr03B03','다분야 시뮬레이션 데이터 기반 AI 대리 모델을 활용한 피로수명예측 프레임워크 연구','김태진*(씨에이이큐브) 외 3인',{fullAuthors:'김태진*(씨에이이큐브(주)), 조정휘(씨에이이큐브(주)), 전재주(씨에이이큐브(주)), 신현호(씨에이이큐브(주))'}),
+            T('26CA-Fr03B04','복잡한 미로 네트워크를 위한 딥러닝 기반 경로 계획','김정훈*(KAIST), 장인권',{fullAuthors:'김정훈*(KAIST), 장인권(KAIST)'}),
+            T('26CA-Fr03B05','Physics-Informed Programming of Energy Landscapes in Mechanical Metamaterials','강석헌*(KAIST), 김영권, 양진규, 유승화',{fullAuthors:'강석헌*(KAIST), 김영권(서울대), 양진규(서울대), 유승화(KAIST)'})
+          ]},
+        { roomIdx:3, cat:'normal', name:'복합재역학', chair:'임형준(경상대)',
+          talks: [
+            T('26CA-Fr04B01','그래핀/CNT 나노복합재의 임계 필러 함량 이후 강도 저하에 대한 Phase-field 파괴 해석','류원창(경상대), 임형준*',{invited:true,fullAuthors:'류원창(경상대), 임형준*(경상대)'}),
+            T('26CA-Fr04B02','복합재 강성 및 인성 향상을 위한 Phase-Field 기반 Dog-bone 미세구조 연구','이송현*(이화여대), 윤채린, 김영수, 이상륜',{fullAuthors:'이송현*(이화여대), 윤채린(이화여대), 김영수(국방과학연구소), 이상륜(이화여대)'}),
+            T('26CA-Fr04B03','신경망-유전 알고리즘 기반 격자 구조 설계를 위한 Bézier, B-spline, NURBS 곡선 표현 방식의 수렴 효율 및 성능 비교','안지혜*(이화여대)'),
+            T('26CA-Fr04B04','기계적으로 분쇄된 복합재 조각 구조 모델링을 통한 재활용 복합재 인장 강성 예측','박호정*(UNIST), 정찬우, 박영빈',{fullAuthors:'박호정*(UNIST), 정찬우(UNIST), 박영빈(UNIST)'}),
+            T('26CA-Fr04B05','적층 제조에서 금속-폴리머 접착을 위한 프로그래밍 가능한 표면 텍스처링','이진우*(POSTECH), 이정락, 이안나',{fullAuthors:'이진우*(POSTECH), 이정락(POSTECH), 이안나(POSTECH)'})
+          ]},
+        { roomIdx:4, cat:'normal', name:'전산역학 2', chair:'진수영(부경대)',
+          talks: [
+            T('26CA-Fr05B01','취성재료 내 균열진전 해석을 위한 적응형 유한요소-페리다이나믹스 결합 기법','진수영*(부경대), 김선우, 홍정욱',{invited:true,fullAuthors:'진수영*(부경대), 김선우(KAIST), 홍정욱(KAIST)'}),
+            T('26CA-Fr05B02','격자 구조를 포함한 충돌 해석의 기계학습 대리모델 적용 연구','전우열*(GIST), 이재욱',{fullAuthors:'전우열*(GIST), 이재욱(GIST)'}),
+            T('26CA-Fr05B03','분자동역학 기반 PEGDE-Ionic Liquid 에폭시 시스템의 전기화학적 탈착 메커니즘 분석','박유진*(창원대), 유화수, 권준표, 윤태영',{fullAuthors:'박유진*(창원대), 유화수(아주대), 권준표(아주대), 윤태영(창원대)'}),
+            T('26CA-Fr05B04','사원수 기반 비선형 보의 아이소-지오메트릭 배치 설계 민감도 해석','강세현*(서울대), 김현석, 조선호',{fullAuthors:'강세현*(서울대), 김현석(선박해양플랜트연구소), 조선호(서울대)'}),
+            T('26CA-Fr05B05','이종 팔면체 마이크로구조체의 탄성 등방성','문제훈*(KAIST) 외 4인',{fullAuthors:'문제훈*(KAIST), 이승환(KAIST), 이기수(KAIST), 이정운(KAIST), 조한솔(KAIST)'})
+          ]},
+        { roomIdx:5, cat:'normal', name:'멀티피직스 시스템 해석과 설계 2', chair:'김진욱(경북대)',
+          talks: [
+            T('26CA-Fr06B01','음향 홀로그램 설계를 위한 방사면 형상에 따른 음파 전파 특성 분석','김진욱*(경북대), 여상훈, 강호석',{invited:true,fullAuthors:'김진욱*(경북대), 여상훈(경북대), 강호석(경북대)'}),
+            T('26CA-Fr06B02','수중 음향 능동 제어를 위한 압전 메타구조 미소 구조 형상 연구','홍정완*(서울대), 오주환, 조치영, 오기승',{fullAuthors:'홍정완*(서울대), 오주환(서울대), 조치영(서울대), 오기승(서울대)'}),
+            T('26CA-Fr06B03','원거리 초음파 집속을 위한 다중 전극 패턴 레벨셋 위상최적화','박용호*(부경대), 정현준, 현재엽',{fullAuthors:'박용호*(부경대), 정현준(부경대), 현재엽(부경대)'}),
+            T('26CA-Fr06B04','최초 충돌 확률 기반 나노구조 기하학적 접근성 지표 개발','이승엽*(한국생산기술연구원), 정승혁',{fullAuthors:'이승엽*(한국생산기술연구원), 정승혁(한국생산기술연구원)'}),
+            T('26CA-Fr06B05','데이터 기반 멀티스케일 점탄성 복합재료 미세구조 설계 최적화','엄경찬*(강원대)')
+          ]},
+        { roomIdx:6, cat:'normal', name:'멀티스케일 해석과 설계 2', chair:'문장혁(중앙대)',
+          talks: [
+            T('26CA-Fr07B01','멀티스케일 시뮬레이션 기반 탄소계 음극의 고속충전 및 고에너지밀도 설계','문장혁*(중앙대), 박성수',{invited:true,fullAuthors:'문장혁*(중앙대), 박성수(중앙대)'}),
+            T('26CA-Fr07B02','외부 전기장을 이용한 HFBI-Graphene 복합체의 친수성/소수성 기능화에 대한 분자동역학 연구','박우범*(고려대), 윤태영, 류준석, 나성수',{fullAuthors:'박우범*(고려대), 윤태영(창원대), 류준석(금오공대), 나성수(고려대)'}),
+            T('26CA-Fr07B03','Unveiling effect of surface roughness to mechanical properties of PAN-based CFs through finite element modeling','hoangquangninh*(인천대)'),
+            T('26CA-Fr07B04','A Multi-Objective Approach to Optimize Cruciform Specimens for Polymer Biaxial Characterization','Doan Hung Vo*(인천대), 박형범',{fullAuthors:'Doan Hung Vo*(인천대), 박형범(인천대)'}),
+            T('26CA-Fr07B05','고분자 분말의 소결 거동을 분석하기 위한 멀티스케일 시뮬레이션 방법론','김시현*(성균관대), 김홍덕, 최준명',{fullAuthors:'김시현*(성균관대), 김홍덕(성균관대), 최준명(성균관대)'})
+          ]}
+      ]
+    },
+    { lunchRow: true, time: '12:00 ~ 13:30', label: '점심 시간 · LUNCH' },
+    {
+      blockTime: '13:30 ~ 14:45',
+      slots: SLOTS_15C,
+      sessions: [
+        { roomIdx:0, cat:'normal', name:'생체역학', chair:'김지선(계명대)',
+          talks: [
+            T('26CA-Fr01C01','근위 대퇴골 관심 영역의 하중 의존성 분석을 위한 최적화 기반 역해석 방법','김지선(계명대), 김정진',{invited:true,fullAuthors:'김지선(계명대), 김정진(계명대)'}),
+            T('26CA-Fr01C02','근골격계 시뮬레이션을 이용한 회전근개 파열 진행에 따른 삼각근 역학 및 관절 안정성 변화에 관한 수치적 연구','구운회*(서강대), 김태현, 김남근',{fullAuthors:'구운회*(서강대), 김태현(서강대), 김남근(서강대)'}),
+            T('26CA-Fr01C03','무릎 움직임을 모사하는 착용형 무릎 관절 개발','김혁*(고려대), 황현준, 문준서, 송용남',{fullAuthors:'김혁*(고려대), 황현준(고려대), 문준서(고려대), 송용남(고려대)'}),
+            T('26CA-Fr01C04','적외선 광원을 통한 눈물막 두께 변화 측정','유영훈*(고려대), 황현준, 신다은, 송용남',{fullAuthors:'유영훈*(고려대), 황현준(고려대), 신다은(고려대), 송용남(고려대)'}),
+            T('26CA-Fr01C05','근위 대퇴골 내 골용 시멘트 삽입에 탄성계수 변화에 따른 골용 스캐폴드의 구조적 거동 분석','이한규*(계명대), 김정진, 김지선',{fullAuthors:'이한규*(계명대), 김정진(계명대), 김지선(계명대)'})
+          ]},
+        { roomIdx:1, cat:'normal', name:'통계기반 해석 및 설계', chair:'정용수(홍익대)',
+          talks: [
+            T('26CA-Fr02C01','Monitoring Cumulative Operational Drift for Early Health Trend Identification in Industrial Robots','송진우(동국대), 김흥수',{invited:true,fullAuthors:'송진우(동국대), 김흥수(동국대)'}),
+            T('26CA-Fr02C02','Novel Sensor Placement Optimization Strategy for Structural Health Monitoring through Deep Ensemble Invertible Neural Networks','조한빈*(KAIST) 외 5인',{fullAuthors:'조한빈*(KAIST), 정용수(홍익대), 문현빈(KAIST), 유제천(KAIST), 김희규(KAIST), 유승화(KAIST)'}),
+            T('26CA-Fr02C03','자기지도 잠재 표현 학습을 통한 비정형 요소 위상최적설계 가속화','박효근*(한양대), 민승재',{fullAuthors:'박효근*(한양대), 민승재(한양대)'}),
+            T('26CA-Fr02C04','Preventing Local Optima Strategy in Anisotropic-Isotropic Multi-Material Topology Optimization','송원석*(한양대), 민승재',{fullAuthors:'송원석*(한양대), 민승재(한양대)'}),
+            T('26CA-Fr02C05','Auto-CellPI: Automated Cell-based Architecture Design Optimization for Physics-informed ML','곽성민*(중앙대), 윤창현, 이재륜, 이수영',{fullAuthors:'곽성민*(중앙대), 윤창현(중앙대), 이재륜(중앙대), 이수영(중앙대)'})
+          ]},
+        { roomIdx:2, cat:'normal', name:'연속체역학 (탄·소성학)', chair:'김준식(금오공대)',
+          talks: [
+            T('26CA-Fr03C01','코시 연속체 차원 축소 이론에서의 뇌터 정리와 게이지 자유도','김준식*(금오공대)',{invited:true}),
+            T('26CA-Fr03C02','Weaving 및 Trimming 기반 열전달 경로 설계를 통한 Pitch 탄소복합재의 두께 방향 열전도 향상 및 해석','전재안*(인하대) 외 4인',{fullAuthors:'전재안*(인하대), 홍명진(인하대), 신승철(인하대), 정상극(현대자동차), 이상의(인하대)'}),
+            T('26CA-Fr03C03','체심입방 결정 재료의 통계적 추론 기반 모델링','이승현*(KAIST) 외 5인',{fullAuthors:'이승현*(KAIST), Thao Nguyen, Dardy J. Luscher, Saryu J. Fensin, John S. Carpenter(로스앨러모스 국립연구소), 조한솔(KAIST)'}),
+            T('26CA-Fr03C04','GPU-Native CFD 프레임워크에서의 대류 스킴 및 시간 적분 기법 비교 연구','박정규*(클루) 외 3인',{fullAuthors:'박정규*(주식회사클루), 이세욱(주식회사 클루), 윤장혁(한양대), 이상아(한국생산기술연구원)'}),
+            T('26CA-Fr03C05','자원플랜트 엔지니어링 연구 분야 소개','김영주*(한국지질자원연구원)')
+          ]},
+        { roomIdx:3, cat:'normal', name:'실험역학', chair:'임형준(경상대)',
+          talks: [
+            T('26CA-Fr04C01','진동 유도 확산층 제어 기반 초고감도 망간 이온 현장 검출 센서','박대일*(성균관대) 외 12인',{fullAuthors:'박대일*(성균관대), 박주형(성균관대), 김치현(성균관대), 박현준(성균관대), 채경환(성균관대), 김가영(성균관대), 조원준(성균관대), 장다영(성균관대), 강채영(성균관대), 김수빈(성균관대), 최도은(성균관대), 허은슬(성균관대), 박진성(성균관대)'}),
+            T('26CA-Fr04C02','Design of Au@Ag Nanostructured SERS Substrate for High-Sensitivity Thiram Detection','김가영*(성균관대) 외 12인',{fullAuthors:'김가영*(성균관대), 채경환(성균관대), 박대일(성균관대), 조원준(성균관대), 장다영(성균관대), 최도은(성균관대), 강채영(성균관대), 김수빈(성균관대), 허은슬(성균관대), 박현준(성균관대), 김치현(성균관대), 박주형(성균관대), 박진성(성균관대)'}),
+            T('26CA-Fr04C03','Electromagnetic simulation based nanostructure design: Detection of biomarker and toxicant','채경환*(성균관대) 외 12인',{fullAuthors:'채경환*(성균관대), 박현준(성균관대), 박주형(성균관대), 김치현(성균관대), 김가영(성균관대), 박대일(성균관대), 조원준(성균관대), 강채영(성균관대), 허은슬(성균관대), 장다영(성균관대), 김수빈(성균관대), 최도은(성균관대), 박진성(성균관대)'}),
+            T('26CA-Fr04C04','변형률 불일치가 있는 삼중층 구조의 주름 및 굽힘의 거동','곽현수*(POSTECH)'),
+            T('26CA-Fr04C05','이산요소법 기반 적층제조공정 모사를 통한 출력물의 가상 물성 시험','문제승*(UNIST), 정하영',{fullAuthors:'문제승*(UNIST), 정하영(UNIST)'})
+          ]},
+        { roomIdx:4, cat:'normal', name:'전산역학 3', chair:'현재엽(부경대)',
+          talks: [
+            T('26CA-Fr05C01','위상장 파괴역학과 제3매질 접촉역학을 통합한 변분 프레임워크 개발','김재민*(창원대) 외 3인',{invited:true,fullAuthors:'김재민*(창원대), 김국헌(창원대), 윤성민(창원대), 이동화(한국원자력연구원)'}),
+            T('26CA-Fr05C02','분자동역학 연구: 충격파 저감과 고분자 얽힘의 관계','전성호*(부산대), 이재준, 배수원',{fullAuthors:'전성호*(부산대), 이재준(부산대), 배수원(부산대)'}),
+            T('26CA-Fr05C03','A Robust Regulation Framework for Thermoelastic Eigenproblems','반 티엔 탄*(전북대), 트린민췐, 전형민',{fullAuthors:'반 티엔 탄*(전북대), 트린민췐(전북대), 전형민(전북대)'}),
+            T('26CA-Fr05C04','Phase-field simulation of elastoplastic fracture in Reissner–Mindlin shell structures','웬 반호이*(전북대), 전형민',{fullAuthors:'웬 반호이*(전북대), 전형민(전북대)'}),
+            T('26CA-Fr05C05','AI-Driven Topology Optimization for Anisotropic Materials','쩐 찐 망중*(전북대)')
+          ]},
+        { roomIdx:5, cat:'normal', name:'멀티피직스 시스템 해석과 설계 3', chair:'김동민(KAIST)',
+          talks: [
+            T('26CA-Fr06C01','제로샷 리브 설계: 학습 불필요 생성모델과 위상최적화의 융합','권용민*(KAIST), 강남우',{fullAuthors:'권용민*(KAIST), 강남우(KAIST)'}),
+            T('26CA-Fr06C02','AI 기반 다중재료 3D 프린팅을 이용한 초고강성 코어–쉘 BCC 격자 구조의 형상 최적 설계','서유정*(이화여대)'),
+            T('26CA-Fr06C03','상변화 물질을 이용한 열적 가변 수중 음향 메타구조의 레벨셋 위상최적화','정현준*(부경대), 박용호, 현재엽',{fullAuthors:'정현준*(부경대), 박용호(부경대), 현재엽(부경대)'}),
+            T('26CA-Fr06C04','고출력 Tonpilz 트랜스듀서 기반 맞춤형 Sonicator의 음장 제어','임성민*(경북대), 강주원, 강우철, 김두현, 김진욱',{fullAuthors:'임성민*(경북대), 강주원(경북대), 강우철(LG 전자), 김두현(LG 전자), 김진욱(경북대)'}),
+            T('26CA-Fr06C05','Stress- and Fatigue-Oriented Magneto-Structural Topology Optimization for High-Durability Electromagnetic Actuators','라마도니 아흐마드*(GIST), 이재욱',{fullAuthors:'라마도니 아흐마드*(GIST), 이재욱(GIST)'})
+          ]},
+        { roomIdx:6, cat:'normal', name:'멀티스케일 해석과 설계 3', chair:'권준표(아주대)',
+          talks: [
+            T('26CA-Fr07C01','미세구조 분해능 모델링을 통한 리튬 이온 배터리 전극 미세구조에 탄소-바인더 도메인 형상이 미치는 구조적 영향 규명','송현석*(중앙대), 문장혁',{fullAuthors:'송현석*(중앙대), 문장혁(중앙대)'}),
+            T('26CA-Fr07C02','유한요소해석 기법을 통한 굴곡도가 Li 금속 host frame 영향 분석 증착 거동 분석','박성수*(중앙대), 차정호, 석무겸, 문장혁',{fullAuthors:'박성수*(중앙대), 차정호(중앙대), 석무겸(중앙대), 문장혁(중앙대)'}),
+            T('26CA-Fr07C03','Particle to Cell Electro-Chemo-Mechanical Modeling for All-solid-state batteries','Hoang Trung Dinh*(중앙대), 문장혁',{fullAuthors:'Hoang Trung Dinh*(중앙대), 문장혁(중앙대)'}),
+            T('26CA-Fr07C04','MLFF 기반 분자동역학을 이용한 저온 MOCVD MoS2 성장용 황 전구체의 기상 반응 메커니즘 연구','정예린*(중앙대), 문장혁',{fullAuthors:'정예린*(중앙대), 문장혁(중앙대)'}),
+            T('26CA-Fr07C05','탄소나노튜브 전계효과 트랜지스터를 위한 용액 기반 정렬의 DPD 시뮬레이션 연구','엄상민*(UNIST), 신예현, 권지민, 김병조',{fullAuthors:'엄상민*(UNIST), 신예현(UNIST), 권지민(KAIST), 김병조(UNIST)'})
+          ]}
+      ]
+    },
+    { specialRow: true, time: '14:45 ~ 16:00', label: '경품추첨, 학생경진대회 수상 및 폐회식 (그랜드볼룸1)', desc: '<p>경품추첨, 학생경진대회 시상, 폐회식이 진행됩니다.</p>' }
+  ]
+};
+
+// Mark Friday's tutorial cell continuation: in 10:45-12:00 block, room 0 should be visually
+// connected with the tutorial cell. We handle this by detecting the merged-tutorial in the prior block
+// and skipping rendering of room 0 in the next block. We'll add a flag.
+// Already merged with mergedSpan covers all 5 slots in 09:00-10:15. The 11:00-11:50 talk visually
+// spills into 10:45-12:00 block; we'll mention it in the tutorial cell's mergedDesc and leave the
+// next block's room 0 as empty.
+
+// ============== RENDER ==============
+const grid = document.getElementById('schedule');
+let activeFilter = 'all';
+let currentDay = 'thu';
+
+function renderHeader() {
+  let html = '<div class="grid-header time-head">TIME</div>';
+  ROOMS.forEach((r, i) => {
+    html += `<div class="grid-header"><span class="room-no">ROOM ${String(i+1).padStart(2,'0')}</span>${r.name}<span class="room-loc">${r.loc}</span></div>`;
+  });
+  return html;
+}
+
+function renderDay(dayKey) {
+  let html = renderHeader();
+  const blocks = SCHEDULE[dayKey];
+
+  blocks.forEach((block, blockIdx) => {
+    if (block.lunchRow) {
+      html += `<div class="time-cell">${block.time}</div>`;
+      html += `<div class="full-row lunch"><div class="row-title">${block.label}</div></div>`;
+      return;
+    }
+    if (block.breakRow) {
+      html += `<div class="time-cell">${block.time}</div>`;
+      html += `<div class="full-row break"><div class="row-title">— ${block.label} —</div></div>`;
+      return;
+    }
+    if (block.specialRow) {
+      html += `<div class="time-cell">${block.time}</div>`;
+      html += `<div class="full-row"><div class="row-title">${block.label}</div>${block.desc ? `<div class="row-desc">${block.desc}</div>` : ''}</div>`;
+      return;
+    }
+
+    // Block marker
+    html += `<div class="block-marker">
+      <span><span class="block-time">${block.blockTime}</span></span>
+      <span style="color:var(--ink-2)">15분 단위 · ${block.slots.length} slots</span>
+    </div>`;
+
+    // Session header row (chair, session name) above the talks
+    html += `<div class="session-head-time">SESSION</div>`;
+    for (let r = 0; r < ROOMS.length; r++) {
+      const session = block.sessions.find(s => s.roomIdx === r);
+      if (session) {
+        const catLabel = {
+          keynote: '초청강연', special: '특별세션', contest: '학생경진대회',
+          tutorial: '튜토리얼', poster: '포스터', normal: '일반세션'
+        }[session.cat];
+        html += `<div class="session-head-cell cat-${session.cat}" data-block="${blockIdx}" data-room="${r}">
+          <span class="cat-stripe"></span>
+          <span class="sh-cat">${catLabel}</span>
+          ${session.name}
+          ${session.chair ? `<div class="sh-chair">좌장 ${session.chair}</div>` : ''}
+        </div>`;
+      } else {
+        html += `<div class="session-head-cell empty"></div>`;
+      }
+    }
+
+    // Time slots (rows of talks)
+    block.slots.forEach((slot, slotIdx) => {
+      const endSlot = block.slots[slotIdx+1] || (slot === '10:00' ? '10:15' : (slot === '11:45' ? '12:00' : (slot === '14:30' ? '14:45' : '')));
+      html += `<div class="time-cell" data-row="${blockIdx}-${slotIdx}"><span>${slot}</span><span class="time-end">~ ${endSlot}</span></div>`;
+
+      for (let r = 0; r < ROOMS.length; r++) {
+        const session = block.sessions.find(s => s.roomIdx === r);
+
+        if (!session) {
+          html += `<div class="talk empty"></div>`;
+          continue;
+        }
+
+        if (session.segments) {
+          // Find segment that starts at this slot
+          const seg = session.segments.find(s => s.startSlot === slotIdx);
+          // Check if this slot is within any segment (covered by an earlier segment's span)
+          const covered = session.segments.some(s => slotIdx > s.startSlot && slotIdx < s.startSlot + s.span);
+
+          if (covered) {
+            continue;
+          }
+          if (seg) {
+            if (seg.isBreak) {
+              html += `<div class="talk break-cell" style="grid-row: span ${seg.span};">
+                <span class="break-label">${seg.label || '휴식'}</span>
+              </div>`;
+            } else {
+              const filterMatch = (activeFilter === 'all' || activeFilter === session.cat);
+              const dimClass = filterMatch ? '' : 'dimmed';
+              const t = seg.talk;
+              html += `<div class="talk cat-${session.cat} ${dimClass}" data-cat="${session.cat}" data-block="${blockIdx}" data-room="${r}" data-segment-idx="${session.segments.indexOf(seg)}" style="grid-row: span ${seg.span};">
+                <span class="talk-cat-bar"></span>
+                ${seg.label ? `<div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--accent);letter-spacing:0.05em;margin-bottom:5px;font-weight:500;">${seg.label}</div>` : ''}
+                <div class="talk-title-mini">${t.invited ? '<span class="talk-invited-marker"></span>' : ''}${t.title}</div>
+                <div class="talk-author-mini">${cellAuthor(t.fullAuthors || t.authors)}</div>
+              </div>`;
+            }
+          } else {
+            html += `<div class="talk empty"></div>`;
+          }
+          continue;
+        }
+
+        if (session.merged) {
+          // For merged sessions: render only on first slot, span the rest
+          if (slotIdx === 0) {
+            const span = session.mergedSpan || block.slots.length;
+            const filterMatch = (activeFilter === 'all' || activeFilter === session.cat);
+            const dimClass = filterMatch ? '' : 'dimmed';
+
+            let inner = '';
+            if (session.talks && session.talks.length) {
+              inner = `<ul class="merged-talks">`;
+              session.talks.forEach((t, i) => {
+                inner += `<li>
+                  <span class="mt-num">${String(i+1).padStart(2,'0')}</span>
+                  <span class="mt-content">
+                    <span class="mt-title">${t.invited ? '<span class="talk-invited-marker"></span>' : ''}${t.title}</span>
+                    <span class="mt-author">${cellAuthor(t.fullAuthors || t.authors)}</span>
+                  </span>
+                </li>`;
+              });
+              inner += `</ul>`;
+              if (session.mergedDesc) {
+                inner = `<div class="merged-desc">${session.mergedDesc}</div>` + inner;
+              }
+            } else {
+              inner = `<div class="merged-desc">${session.mergedDesc || session.name}</div>`;
+            }
+
+            html += `<div class="talk merged cat-${session.cat} ${dimClass}" data-cat="${session.cat}" data-block="${blockIdx}" data-room="${r}" data-merged="1" style="grid-row: span ${span};">
+              <span class="talk-cat-bar"></span>
+              ${inner}
+            </div>`;
+          }
+          // skip subsequent slots — grid-row span handles it
+          continue;
+        }
+
+        const talk = session.talks[slotIdx];
+        if (!talk) {
+          html += `<div class="talk empty"></div>`;
+          continue;
+        }
+
+        const filterMatch = (activeFilter === 'all' || activeFilter === session.cat);
+        const dimClass = filterMatch ? '' : 'dimmed';
+
+        html += `<div class="talk cat-${session.cat} ${dimClass}" data-cat="${session.cat}" data-block="${blockIdx}" data-room="${r}" data-slot="${slotIdx}">
+          <span class="talk-cat-bar"></span>
+          <div class="talk-title-mini">${talk.invited ? '<span class="talk-invited-marker"></span>' : ''}${talk.title}</div>
+          <div class="talk-author-mini">${cellAuthor(talk.fullAuthors || talk.authors)}</div>
+        </div>`;
+      }
+    });
+  });
+
+  return html;
+}
+
+function applyFilter() {
+  document.querySelectorAll('.talk').forEach(el => {
+    const cat = el.dataset.cat;
+    if (!cat) return;
+    if (activeFilter === 'all' || activeFilter === cat) {
+      el.classList.remove('dimmed');
+    } else {
+      el.classList.add('dimmed');
+    }
+  });
+}
+
+const modal = document.getElementById('modal');
+
+function showTalkModal(blockIdx, roomIdx, slotIdx) {
+  const block = SCHEDULE[currentDay][blockIdx];
+  const session = block.sessions.find(s => s.roomIdx === roomIdx);
+  if (!session) return;
+  const talk = session.talks[slotIdx];
+  if (!talk) return;
+
+  const slot = block.slots[slotIdx];
+  const slotEnd = block.slots[slotIdx+1] || (slot === '10:00' ? '10:15' : (slot === '11:45' ? '12:00' : '14:45'));
+  const room = ROOMS[roomIdx];
+
+  document.getElementById('modalTag').textContent = `${slot} ~ ${slotEnd} · ${room.name} (${room.loc})`;
+  document.getElementById('modalTitle').textContent = '';
+  document.getElementById('modalMeta').innerHTML = `<strong>세션</strong> ${session.name}${session.chair ? ` · <strong>좌장</strong> ${session.chair}` : ''}`;
+
+  const fullAuthors = (talk.fullAuthors || talk.authors).replace(/(\S+\*)/g, '<span class="presenter">$1</span>');
+
+  document.getElementById('modalBody').innerHTML = `
+    <div class="talk-full-title">
+      ${talk.invited ? '<span class="talk-invited-badge">Invited</span>' : ''}${talk.title}
+    </div>
+    <div class="talk-full-authors">${fullAuthors}</div>
+    <div class="talk-full-code">KSME ${talk.code}</div>
+  `;
+  modal.classList.add('show');
+}
+
+function showSegmentModal(blockIdx, roomIdx, segIdx) {
+  const block = SCHEDULE[currentDay][blockIdx];
+  const session = block.sessions.find(s => s.roomIdx === roomIdx);
+  if (!session || !session.segments) return;
+  const seg = session.segments[segIdx];
+  if (!seg) return;
+  const room = ROOMS[roomIdx];
+  const t = seg.talk;
+
+  document.getElementById('modalTag').textContent = `${seg.label || ''} · ${room.name} (${room.loc})`;
+  document.getElementById('modalTitle').textContent = '';
+  document.getElementById('modalMeta').innerHTML = `<strong>세션</strong> ${session.name}${session.chair ? ` · <strong>좌장</strong> ${session.chair}` : ''}`;
+
+  const fullAuthors = (t.fullAuthors || t.authors).replace(/(\S+\*)/g, '<span class="presenter">$1</span>');
+
+  document.getElementById('modalBody').innerHTML = `
+    <div class="talk-full-title">
+      ${t.invited ? '<span class="talk-invited-badge">Invited</span>' : ''}${t.title}
+    </div>
+    <div class="talk-full-authors">${fullAuthors}</div>
+    <div class="talk-full-code">KSME ${t.code}</div>
+  `;
+  modal.classList.add('show');
+}
+
+function showPosterModal(posterKey) {
+  const data = POSTERS[posterKey];
+  if (!data) return;
+
+  document.getElementById('modalTag').textContent = `포스터 세션 ${posterKey}`;
+  document.getElementById('modalTitle').textContent = `포스터 세션 ${posterKey}`;
+  document.getElementById('modalMeta').innerHTML = `<strong>일정</strong> ${data.summary}`;
+
+  let body = '';
+  let total = 0;
+  data.groups.forEach(g => {
+    total += g.items.length;
+    body += `<div class="poster-cat-group">
+      <div class="poster-cat-header">${g.name}<span class="cat-count">${g.items.length}편</span></div>
+      <ul class="poster-list">`;
+    g.items.forEach(p => {
+      body += `<li>
+        <span class="poster-num">${p.id}</span>
+        <span class="poster-content">
+          <div class="poster-title">${p.title}</div>
+          <div class="poster-author">${p.authors}</div>
+        </span>
+      </li>`;
+    });
+    body += `</ul></div>`;
+  });
+
+  body = `<div class="poster-summary">총 <strong>${total}편</strong>의 포스터가 ${data.groups.length}개 카테고리로 전시됩니다. 좌장이 직접 설명을 들으며 라운드를 진행합니다.</div>` + body;
+
+  document.getElementById('modalBody').innerHTML = body;
+  modal.classList.add('show');
+}
+
+function showMergedSessionModal(blockIdx, roomIdx) {
+  const block = SCHEDULE[currentDay][blockIdx];
+  const session = block.sessions.find(s => s.roomIdx === roomIdx);
+  if (!session) return;
+  const room = ROOMS[roomIdx];
+
+  document.getElementById('modalTag').textContent = `${block.blockTime} · ${room.name} (${room.loc})`;
+  document.getElementById('modalTitle').textContent = session.name;
+  document.getElementById('modalMeta').innerHTML = session.chair ? `<strong>좌장</strong> ${session.chair}` : '';
+
+  let body = `<div class="poster-summary">${session.mergedDesc || ''}</div>`;
+
+  if (session.talks && session.talks.length) {
+    body += `<ul class="session-talk-list">`;
+    session.talks.forEach((t, i) => {
+      const fullAuthors = (t.fullAuthors || t.authors).replace(/(\S+\*)/g, '<span class="presenter">$1</span>');
+      body += `<li>
+        <div class="stl-time">${String(i+1).padStart(2,'0')}</div>
+        <div class="stl-content">
+          <div class="stl-title">${t.invited ? '<span class="talk-invited-marker"></span>' : ''}${t.title}</div>
+          <div class="stl-author">${fullAuthors}</div>
+        </div>
+      </li>`;
+    });
+    body += `</ul>`;
+  }
+
+  document.getElementById('modalBody').innerHTML = body;
+  modal.classList.add('show');
+}
+
+function hideModal() { modal.classList.remove('show'); }
+
+function bindEvents() {
+  document.querySelectorAll('.talk').forEach(el => {
+    if (el.classList.contains('empty') || el.classList.contains('break-cell')) return;
+    el.addEventListener('click', () => {
+      const blockIdx = parseInt(el.dataset.block, 10);
+      const roomIdx = parseInt(el.dataset.room, 10);
+      const isMerged = el.dataset.merged === '1';
+      const segIdx = el.dataset.segmentIdx !== undefined ? parseInt(el.dataset.segmentIdx, 10) : null;
+      if (isMerged) {
+        const block = SCHEDULE[currentDay][blockIdx];
+        const session = block.sessions.find(s => s.roomIdx === roomIdx);
+        if (session && session.posterKey) {
+          showPosterModal(session.posterKey);
+        } else {
+          showMergedSessionModal(blockIdx, roomIdx);
+        }
+      } else if (segIdx !== null && !isNaN(segIdx)) {
+        showSegmentModal(blockIdx, roomIdx, segIdx);
+      } else {
+        const slotIdx = parseInt(el.dataset.slot, 10);
+        showTalkModal(blockIdx, roomIdx, slotIdx);
+      }
+    });
+  });
+}
+
+function init() {
+  grid.innerHTML = renderDay(currentDay);
+  bindEvents();
+
+  document.querySelectorAll('.day-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentDay = tab.dataset.day;
+      grid.innerHTML = renderDay(currentDay);
+      bindEvents();
+    });
+  });
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      applyFilter();
+    });
+  });
+
+  document.getElementById('modalClose').addEventListener('click', hideModal);
+  modal.addEventListener('click', e => { if (e.target === modal) hideModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') hideModal(); });
+}
+
+init();
+</script>
+</body>
+</html>
